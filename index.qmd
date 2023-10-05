@@ -1,0 +1,22 @@
+---
+title: "Delta Residents Survey"
+author: "Jessica Rudnick, PhD., Kenji Tomari"
+format: 
+  html:
+    number-sections: true
+    embed-resources: true
+    code-fold: true
+    message: false
+    warning: false
+    toc: true
+    toc-location: right
+    toc-depth: 4
+---
+
+## Introduction
+
+This is the Delta Residents Survey (DRS) repository for all the scripts needed to load and analyze the survey data from 2023. The survey was conducted in the first quarter of 2023, reaching over 2,300 Delta and Delta-adjacent residents of the California Delta. Among other things, the survey included questions on well-being and environmental changes.
+
+## Data
+
+The publicly available data set will be published in the coming months (late 2023).
