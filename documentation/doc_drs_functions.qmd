@@ -1,0 +1,72 @@
+---
+title: "DRS Functions"
+author: "Kenji Tomari"
+date: last-modified
+date-format: "[Last Updated on] MMMM, YYYY"
+format: 
+  html:
+    number-sections: true
+    embed-resources: true
+    code-fold: true
+    message: false
+    warning: false
+    toc: true
+    toc-location: right
+    toc-depth: 4
+---
+
+## Introduction {#sec-introduction}
+
+In this document, we review the functions in the file "drs_functions.R". This script contains the primary functions to help you begin to navigate the 2023 survey data. At a later date, we intend to convert the functions in this script into a package. As such, you may find some additional documentation in the script itself using R oxygen2 style comments, prefacing each function declaration.
+
+This document assumes you have familiarity with the {tidyverse} family of packages. Specifically, it assumes that you understand:
+
+-   Pipes `%>%`.
+-   The `*apply` family of functions and how they are mimicked in {purrr} with functions like `map()`.
+-   Tibbles.
+
+It also assumes you have at least a conceptual understanding of "regular expressions."
+
+::: {.callout-tip title="Regular Expressions"}
+As a short summary, regular expressions (aka regex) are used to find patterns in strings (ie. text). Using special symbols placed in a certain sequence, they can help to identify patterns in text. For instance, to identify the text `"<Missing>"`, we might specify a search for a pattern of angle brackets. We could use this regex, `"^\\<.+\\>$"` which essentially identifies if a piece of text has a pattern that matches the following description: the first character is an left angle bracket; followed by any combination of characters; and concludes with a right angle bracket. This example is not meant to teach you regex, but rather demonstrate purpose that regex fills: a means to detect textual patterns in character vectors.
+:::
+
+## Outline of Functions {#sec-outline}
+
+* `drs_as_NA()`
+    
+    This function takes a data.frame or tibble as an input and then applies an algorithm on each column, one at a time. However, the algorithm only applies to columns of type character or factor. It searches these columns for values that match a regex pattern consisting of text enclosed between angle brackets, eg. `"<Decline to answer>"`. It then converts these values to standard `NA` values. In the case of factors, this algorithm drops missing levels (eg. `"<Decline to answer>"`).
+
+* `drs_read()`
+
+    This is the primary function to load the DRS data set. The output is a standard tibble. This algorithm depends on the function `drs_as_NA`.
+
+    This function applies a number of tests to ensure that the data conform to the quality and structure of the original data as specified by the DRS team. More specifically, this algorithm reproduces the complex underlying data structure of the original unpublished data set. Because we decided to limit public access to personally identifiable information, and because the data were originally stored in a format that requires intimate knowledge of both the [SPSS sav data format](https://www.loc.gov/preservation/digital/formats/fdd/fdd000469.shtml) and the R {[haven](https://haven.tidyverse.org/)} package, the DRS team determined to instead supply a modified data set for public use. This complex data set is divided into two interrelated components that require processing to unify them into a workable R data structure. As such, we highly encourage DRS data users to utilize the algorithm specified in this function.
+
+## Function Pseudocode {#sec-pseudocode}
+
+This section provides an overview of the algorithm present in the DRS functions script. These algorithms are written in pseudocode to provide non-R users with a method to translate the R script into the language of your choice. Given that languages like Python remain a popular data science language, and given our lack of expertise outside of the R language, we hope this prosaic description offers some utility.
+
+### drs_read {#sec-pseudocode-drs_read}
+
+1.  **Make sure the argument `.path` satisfies some of the requirements of a file path.** Given differences between Windows and Unix based filesystems, it makes no assumptions about the directory structure. So, it merely makes sure the path is a character (as even the output of `file.path` is a character), and that the vector supplied is of length 1.
+
+2.  **Load packages.** Using a combination of `lapply` and `invisible` we can silently load packages that have not been attached to the R environment. All but one of the packages are standard packages within the tidyverse. This lone package is {digest}, which serves as a means to validate the data checksum (described below).
+
+3.  **Validate files.** This is the first formal section of this function (ie. listed in the document outline). It derives a list of files in the directory path specified by `.path`. It creates a tibble listing all required files. Then using `map_vec` to search each file name in the directory for the regex of one of the required files. This allows us to match file names to the required files needed to load DRS data. In other words, here we identify that there is a file for the data dictionary, the data itself, and the hash code (discussed later). This section concludes with an `if` statement that verifies that all these files are present.
+
+4.  **Validate data.** Read the [checksum](https://en.wikipedia.org/wiki/Checksum) hash code. Make certain that the hash code follows the structure of a SHA-256 hash with 64 characters. Apply the SHA-256 cryptographic hash function on the actual DRS data stored in the directory as a csv file. The concluding `if` statement simply compares the checksum hash code to the newly created hash for the csv data. In summary, this section affirms that the data hasn't become corrupted somehow.
+
+5.  **Load dictionary.** Read the data dictionary from the xlsx file. Then, clean up the dictionary so it doesn't have empty rows, and each item is affixed to one of the DRS column variables. Notice the naming structure of the data dictionary table headers. Among these headers includes "name" and "value". This naming scheme is meant to mimic the dictionaries generated by SPSS. These key-pairs will eventually help us structure the DRS data (ie. the output).
+
+6.  **Load data.** Our primary objective is to correctly assign columns to their appropriate data types (eg. character, factor, numeric, or date-time) as we read the DRS data into the R environment. Thus, before using `read_csv`, we have to do some administrative work to accomplish this objective. We want to first identify the order that columns/variables in the csv appear, and then their order in the data dictionary. We want to ensure that we can correctly match each column of the csv to their appropriate data type in the dictionary. This produce the object `col_order`. Then we process the data dictionary to get a tibble of each variable and their data type, producing `r_class`. Note that `read_csv` accepts an argument `col_types` that specifies the R class of each column. The argument accepts a string, with each character in the string corresponding to the sequence of columns. So, `fff` would suggest we are reading a table with three factor columns, or `Tc` would suggest we are reading a table with two columns: first a date-time then a character column. This section concludes with `read_csv` being invoked with the `col_types` specified according to the data dictionary.
+
+7.  **Set the order of ordinal values.** By inspecting the data dictionary carefully, you should notice that some factor variables have a specified `encoding`. This column identifies the numeric encoding that the original data set we received included. As the original data set was generated in SPSS and read into R using {haven}, we had the option of viewing the data as either encoded numbers or textual values. For instance, question Q1_0 has three possible factors: Decline to answer, No, and Yes. These values could alternatively represented by numbers: 99, 0, and 1 respectively. While these encodings do not always correspond to a specific order or sequence, some variables do have some where the order matters. For example, question Q10 has a diverging scale of possible responses, that range from Very satisfied to Very dissatisfied (along with an option to decline to answer). In this case, and in cases with sequence like income groupings that scale from low income to high income, the order matters. Thus, the objective of this section is to preserve the order.
+
+    We begin by splitting the data dictionary by Variable. This yields a list object, `vars_`. Then, using `map` we derive a list with elements either consisting of `NULL` (ie. variables without a specific order), or a tibble with the appropriate encoding. After cleaning up the output (`fcts_`), we use `map` again to produce a complete data set with correctly ordered ordinal variables. This `map` function relies on `fct_relevel` to sort the variable's factors according to the order presented in the data dictionary (and stored in the variable `fcts_`).
+
+8.  **Convert NAs.** This section is conditional, meaning it only runs if the user specifies the argument `convert_to_NA` as `TRUE` in the function call. Using one of the other DRS functions, `drs_as_NA`, we convert variables with values that match the regex pattern `"^\\<.+\\>$"` (eg. `<Decline to answer>`).
+
+    After these bracketed missingness values are converted to `NA` values, we then convert variables described as "factor - numeric" in the dictionary to simple numeric variables. This special case only appears twice in the whole survey, and only once in the publicly available data set. One of these, Q1a, asks respondents about how long they have lived in the Delta. Responses are typed entries that indicate a time span in terms of years. In other words, respondents type in a number. However, respondents may have also skipped the question (ie. "<Declined to answer>") or stated that this question doesn't apply to them (perhaps because they do not identify as living in the Delta; their response appears as "<Not applicable>"). These two non-numeric responses are identified as "factors" initially. But once they are converted to `NA` values, we can treat the variable as a numeric data type.
+
+9.  **Reorganize the data and return it.** As the final step of this function, the data set has its columns re-ordered to match the order of variables in the data dictionary. The final output of the function is a tibble.
