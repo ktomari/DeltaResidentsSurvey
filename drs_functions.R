@@ -139,7 +139,7 @@ drs_read <- function(
   
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Validate Data ----
-  # Validate that the data matches the hash.
+  # Validate that the data matches the hash checksum.
   # Otherwise, the data may be corrupt.
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Obtain stored hash value.
