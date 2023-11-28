@@ -1,6 +1,6 @@
 ---
 title: "Delta Residents Survey"
-author: "Jessica Rudnick, PhD., Kenji Tomari"
+author: "Jessica Rudnick, PhD., Kenji Tomari, MS/MA."
 format: 
   html:
     number-sections: true
@@ -15,11 +15,11 @@ format:
 
 ## Introduction
 
-This is the Delta Residents Survey (DRS) repository for all the scripts needed to load and analyze the survey data from 2023. The survey was conducted in the first quarter of 2023, reaching over 2,300 Delta and Delta-adjacent residents of the California Delta. Among other things, the survey included questions on well-being and environmental changes.
+This is the [Delta Residents Survey (DRS) repository](https://github.com/ktomari/DeltaResidentsSurvey) for all the scripts needed to load and do basic analyses of the survey data from 2023. The survey was conducted in the first quarter of 2023, reaching over 2,300 Delta and Delta-adjacent residents of the California Delta, with 2,208 usable responses. Among other things, the survey included questions on well-being and environmental changes.
 
 ## Summary Report
 
-The summary report is temporarily available [here](https://ucdavis.box.com/s/34kmt02f87ohhbpij9hu0iesubm15781), and will become available on the Delta Stewardship Council website soon. A screen-reader friendly version will be uploaded in the coming weeks as well. Additional materials will be posted as they become available. Please check back in early 2024.
+The summary report is temporarily available [here](https://ucdavis.box.com/s/34kmt02f87ohhbpij9hu0iesubm15781), and will become available on the Delta Stewardship Council website in the future. A screen-reader friendly version will be uploaded as well. Additional materials will be posted as they become available. Please check back in early 2024.
 
 ## Data
 
