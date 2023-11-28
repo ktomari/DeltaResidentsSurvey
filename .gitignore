@@ -1,5 +1,8 @@
 # Custom
-*.Rproj
+**/*.Rproj
+**/.DS_Store
+data/**
+
 # History files
 .Rhistory
 .Rapp.history
@@ -35,4 +38,4 @@ docs/
 po/*~
 # RStudio Connect folder
 rsconnect/
-.DS_Store
+
