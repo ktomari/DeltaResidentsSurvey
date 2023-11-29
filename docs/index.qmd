@@ -1,21 +1,6 @@
 ---
-title: "Delta Residents Survey 2023"
-author: "Jessica Rudnick, PhD., Kenji Tomari, MS/MA."
-date: last-modified
-date-format: "[Last Updated on] MMMM, YYYY"
-format: 
-  html:
-    number-sections: true
-    embed-resources: true
-    code-fold: true
-    message: false
-    warning: false
-    toc: true
-    toc-location: right
-    toc-depth: 4
+title: "Introduction"
 ---
-
-## Introduction
 
 The Delta Residents Survey (DRS) was conducted in the first quarter of 2023, reaching over 2,300 Delta and Delta-adjacent residents of the California Delta. After an initial round of data cleaning, this left us with 2,208 usable responses. Among other things, the survey included questions on well-being and environmental changes.
 

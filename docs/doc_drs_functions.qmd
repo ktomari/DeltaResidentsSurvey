@@ -33,11 +33,11 @@ As a short summary, regular expressions (aka regex) are used to find patterns in
 
 ## Outline of Functions {#sec-outline}
 
-* `drs_as_NA()`
-    
+-   `drs_as_NA()`
+
     This function takes a data.frame or tibble as an input and then applies an algorithm on each column, one at a time. However, the algorithm only applies to columns of type character or factor. It searches these columns for values that match a regex pattern consisting of text enclosed between angle brackets, eg. `"<Decline to answer>"`. It then converts these values to standard `NA` values. In the case of factors, this algorithm drops missing levels (eg. `"<Decline to answer>"`).
 
-* `drs_read()`
+-   `drs_read()`
 
     This is the primary function to load the DRS data set. The output is a standard tibble. This algorithm depends on the function `drs_as_NA`.
 
