@@ -4495,10 +4495,12 @@ vertical-align: -.125em;
    
   <ul>
   <li><a href="#sec-introduction" id="toc-sec-introduction" class="nav-link active" data-scroll-target="#sec-introduction"><span class="header-section-number">1</span> Introduction</a></li>
-  <li><a href="#sec-outline" id="toc-sec-outline" class="nav-link" data-scroll-target="#sec-outline"><span class="header-section-number">2</span> Outline of Functions</a></li>
-  <li><a href="#sec-pseudocode" id="toc-sec-pseudocode" class="nav-link" data-scroll-target="#sec-pseudocode"><span class="header-section-number">3</span> Function Pseudocode</a>
+  <li><a href="#quickstart" id="toc-quickstart" class="nav-link" data-scroll-target="#quickstart"><span class="header-section-number">2</span> Quickstart</a></li>
+  <li><a href="#notes-on-coding-style" id="toc-notes-on-coding-style" class="nav-link" data-scroll-target="#notes-on-coding-style"><span class="header-section-number">3</span> Notes on Coding Style</a></li>
+  <li><a href="#sec-outline" id="toc-sec-outline" class="nav-link" data-scroll-target="#sec-outline"><span class="header-section-number">4</span> Outline of Functions</a></li>
+  <li><a href="#sec-pseudocode" id="toc-sec-pseudocode" class="nav-link" data-scroll-target="#sec-pseudocode"><span class="header-section-number">5</span> Function Pseudocode</a>
   <ul>
-  <li><a href="#sec-pseudocode-drs_read" id="toc-sec-pseudocode-drs_read" class="nav-link" data-scroll-target="#sec-pseudocode-drs_read"><span class="header-section-number">3.1</span> drs_read</a></li>
+  <li><a href="#sec-pseudocode-drs_read" id="toc-sec-pseudocode-drs_read" class="nav-link" data-scroll-target="#sec-pseudocode-drs_read"><span class="header-section-number">5.1</span> drs_read</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -4538,6 +4540,31 @@ vertical-align: -.125em;
 <section id="sec-introduction" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="sec-introduction"><span class="header-section-number">1</span> Introduction</h2>
 <p>In this document, we review the functions in the file “drs_functions.R”. This script contains the primary functions to help you begin to navigate the 2023 survey data. At a later date, we intend to convert the functions in this script into a package. As such, you may find some additional documentation in the script itself using R oxygen2 style comments, prefacing each function declaration.</p>
+</section>
+<section id="quickstart" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="quickstart"><span class="header-section-number">2</span> Quickstart</h2>
+<p>A close study of this document is not necessary to load the DRS data set. Simply follow the commands below to start using the data.</p>
+<ol type="1">
+<li>Determine your local file path to the <em>directory</em> containing the data.</li>
+<li>Open your script, write and then execute, <code>source(&quot;drs_functions.R&quot;)</code>.</li>
+<li>With your file path, run <code>data &lt;- drs_read(&quot;YOUR/PATH/HERE&quot;)</code>. Alternatively, if you just want to start plotting the data, run <code>data &lt;- drs_read(&quot;YOUR/PATH/HERE&quot;, convert_to_NA = T)</code></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The “ReadMe” file in the repository has a more detailed Quickstart guide.</p>
+</div>
+</div>
+</section>
+<section id="notes-on-coding-style" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="notes-on-coding-style"><span class="header-section-number">3</span> Notes on Coding Style</h2>
 <p>This document assumes you have familiarity with the {tidyverse} family of packages. Specifically, it assumes that you understand:</p>
 <ul>
 <li>Pipes <code>%&gt;%</code>.</li>
@@ -4559,21 +4586,22 @@ Regular Expressions
 </div>
 </div>
 </section>
-<section id="sec-outline" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="sec-outline"><span class="header-section-number">2</span> Outline of Functions</h2>
+<section id="sec-outline" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="sec-outline"><span class="header-section-number">4</span> Outline of Functions</h2>
 <ul>
 <li><p><code>drs_as_NA()</code></p>
-<p>This function takes a data.frame or tibble as an input and then applies an algorithm on each column, one at a time. However, the algorithm only applies to columns of type character or factor. It searches these columns for values that match a regex pattern consisting of text enclosed between angle brackets, eg. <code>&quot;&lt;Decline to answer&gt;&quot;</code>. It then converts these values to standard <code>NA</code> values. In the case of factors, this algorithm drops missing levels (eg. <code>&quot;&lt;Decline to answer&gt;&quot;</code>).</p></li>
+<p>This function works in complement with <code>drs_read</code> (although it could be of use by itself). Its purpose is to convert variable values/levels that encode a special type of “missingness”, including survey responses like “Decline to answer” or “Not Applicable” into an R-friendly format. This function can identify special cases of “missingness” because the DRS data set stores these values within <angle brackets>. This allows the DRS data set to provide nuanced information about the manner in which responses were recorded, while also allowing R to more easily execute analyses that depend on a standardized way to convey missing data in the form of <code>NA</code>.</angle></p>
+<p>Technically, this function takes a data.frame or tibble as an input and then applies an algorithm on each column. However, the algorithm is only applied to “character” or “factor” columns. It searches each of these columns for values that match a <em>regex pattern</em> consisting of text enclosed between angle brackets, eg. <code>&quot;&lt;Decline to answer&gt;&quot;</code>. It then converts these values to standard <code>NA</code> values. In the case of factors, this algorithm also drops missing levels (eg. the level <code>&quot;&lt;Decline to answer&gt;&quot;</code> is no longer recorded when running <code>levels()</code>).</p></li>
 <li><p><code>drs_read()</code></p>
-<p>This is the primary function to load the DRS data set. The output is a standard tibble. This algorithm depends on the function <code>drs_as_NA</code>.</p>
-<p>This function applies a number of tests to ensure that the data conform to the quality and structure of the original data as specified by the DRS team. More specifically, this algorithm reproduces the complex underlying data structure of the original unpublished data set. Because we decided to limit public access to personally identifiable information, and because the data were originally stored in a format that requires intimate knowledge of both the <a href="https://www.loc.gov/preservation/digital/formats/fdd/fdd000469.shtml">SPSS sav data format</a> and the R {<a href="https://haven.tidyverse.org/">haven</a>} package, the DRS team determined to instead supply a modified data set for public use. This complex data set is divided into two interrelated components that require processing to unify them into a workable R data structure. As such, we highly encourage DRS data users to utilize the algorithm specified in this function.</p></li>
+<p>This is the primary function to load the DRS data set. It operates by combining the metadata stored in the data dictionary with the data itself to yield a more complex data structure. The output is a standard tibble. It depends on <code>drs_as_NA</code>.</p>
+<p>This function applies a number of tests to ensure that the data conform to the quality and structure of the original data as specified by the DRS team. Because we decided to limit public access to personally identifiable information, and because the data were originally stored in a format that requires intimate knowledge of both the <a href="https://www.loc.gov/preservation/digital/formats/fdd/fdd000469.shtml">SPSS sav data format</a> and the R {<a href="https://haven.tidyverse.org/">haven</a>} package, the DRS team determined that a modified data set would be more appropriate for public use. As there is no standard way to convey the original data structure in R without additional knowledge, this function provides a simple approach to either reproducing or disregarding the complexity of the original data set. As such, we highly encourage DRS data users to utilize the algorithm specified in this function.</p></li>
 </ul>
 </section>
-<section id="sec-pseudocode" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="sec-pseudocode"><span class="header-section-number">3</span> Function Pseudocode</h2>
+<section id="sec-pseudocode" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="sec-pseudocode"><span class="header-section-number">5</span> Function Pseudocode</h2>
 <p>This section provides an overview of the algorithm present in the DRS functions script. These algorithms are written in pseudocode to provide non-R users with a method to translate the R script into the language of your choice. Given that languages like Python remain a popular data science language, and given our lack of expertise outside of the R language, we hope this prosaic description offers some utility.</p>
-<section id="sec-pseudocode-drs_read" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="sec-pseudocode-drs_read"><span class="header-section-number">3.1</span> drs_read</h3>
+<section id="sec-pseudocode-drs_read" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="sec-pseudocode-drs_read"><span class="header-section-number">5.1</span> drs_read</h3>
 <ol type="1">
 <li><p><strong>Make sure the argument <code>.path</code> satisfies some of the requirements of a file path.</strong> Given differences between Windows and Unix based filesystems, it makes no assumptions about the directory structure. So, it merely makes sure the path is a character (as even the output of <code>file.path</code> is a character), and that the vector supplied is of length 1.</p></li>
 <li><p><strong>Load packages.</strong> Using a combination of <code>lapply</code> and <code>invisible</code> we can silently load packages that have not been attached to the R environment. All but one of the packages are standard packages within the tidyverse. This lone package is {digest}, which serves as a means to validate the data checksum (described below).</p></li>
