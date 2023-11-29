@@ -1,10 +1,12 @@
 # Delta Residents Survey 2023
 
-Thank you for your interest in the source code *repository* for the 2023 Delta Residents Survey. For more information about the survey itself (including reports and documentation on methods), visit the (separate) [DRS GitHub Page](https://ktomari.github.io/DeltaResidentsSurvey/).
+Thank you for your interest in the *source code repository* for the 2023 Delta Residents Survey. For more information about the survey itself (including reports and documentation), visit the (separate) [DRS GitHub Page](https://ktomari.github.io/DeltaResidentsSurvey/).
 
 ## Quickstart
 
-First, download a copy of the DRS 2023 data set onto your local machine and begin writing *your* script with the line `source('drs_functions.R')`. This command loads the script with functions relevant to the DRS data. (At a future date, these functions will be incorporated into an R package.)
+For a more complete guide and documentation on this project, please visit the [DRS GitHub Page](https://ktomari.github.io/DeltaResidentsSurvey/).
+
+Begin by downloading a copy of the DRS 2023 data set onto your local machine and begin writing *your* script with the line `source('drs_functions.R')`. This command loads the script with functions relevant to the DRS data. (At a future date, these functions will be incorporated into an R package.)
 
 Next, determine the path of your local copy of the DRS data set. Importantly, the path we desire is the path to the **directory** containing the:
 
