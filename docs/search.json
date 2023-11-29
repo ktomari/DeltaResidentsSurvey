@@ -53,7 +53,7 @@
     "href": "index.html#source-code-repository",
     "title": "Introduction",
     "section": "Source Code Repository",
-    "text": "Source Code Repository\nIn order to facilitate other researchers to better utilize the DRS data, we have provided a DRS Repository. This GitHub repository includes R scripts needed to load and do basic analyses of the survey data from 2023."
+    "text": "Source Code Repository\nIn order to facilitate other researchers to better utilize the DRS data, we have provided a DRS Repository. This GitHub repository includes R scripts needed to load and do basic analyses of the survey data from 2023. Documentation for these scripts can be found on the Docs page."
   },
   {
     "objectID": "index.html#data",
