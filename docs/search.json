@@ -60,7 +60,14 @@
     "href": "index.html#data",
     "title": "Introduction",
     "section": "Data",
-    "text": "Data\nThe publicly available data set will be published in the coming months (late 2023 to early 2024)."
+    "text": "Data\nThe public data set is now available on openICPSR, a database of social, behavioral, and health sciences research data. The Digital Object Identifier (DOI), which serves as the URL for the data, is https://doi.org/10.3886/E195447V1.\nTo protect respondent privacy, certain geographic, demographic, and survey response variables belonging to the original dataset are restricted from general public dissemination. Users interested in obtaining these data must complete a Data Sharing Agreement for the use of confidential data, submit a Data Request Form to the research team that specifies the reasons for their request, research questions, and specific variables they seek to use, and obtain IRB approval or notice of exemption for their research. To learn more, first review the Data Sharing Agreement available in project documents and then review available materials in the “Restricted Use Data Information” folder.\n\nQuickstart\nWhile there are several documents available on our project openICPSR page, the data itself is stored in the “DRS public data… .zip” compressed folder.\nTo load the data, follow the steps outlined in the ReadMe.md in our GitHub repository, or for a more detailed approach read the documentation on the Core Functions."
+  },
+  {
+    "objectID": "index.html#contact",
+    "href": "index.html#contact",
+    "title": "Introduction",
+    "section": "Contact",
+    "text": "Contact\nIf you have questions, please contact any of the following project members. Please note that we have obfuscated the email address to reduce spam. A listing of domain names (ie. @example.com) is shown in a table that follows.\n\nAnnie Merritt, Delta Stewardship Council. Please contact them with the name annie.merritt at their council email address.\nDr. Jessica Rudnick. Please use the name jessica.rudnick15 at their non-institutional domain.\nKenji Tomari, UC Davis. Please contact them with the name ktomari at their academic institutional domain.\n\n\n\n\nInstitution\nDomains\n\n\n\n\nUC Davis\nucdavis.edu\n\n\nDelta Stewardship Council\ndeltacouncil.ca.gov\n\n\nUnlisted\ngmail.com"
   },
   {
     "objectID": "doc_drs_functions.html",

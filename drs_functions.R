@@ -101,9 +101,10 @@ drs_read <- function(
       "DRS_*.csv",
       "DRS_*.hash.txt"
     ),
-    regex = c("^DRS\\_data\\_dictionary\\_.+\\.xlsx$",
-              "^DRS\\_.+\\.csv$",
-              "^DRS\\_.+\\.hash\\.txt$")
+    regex = c(
+      "^DRS(\\_|\\s)data(\\_|\\s)dictionary(\\_|\\s).+\\.xlsx$",
+      "^DRS(\\_|\\s).+\\.csv$",
+      "^DRS(\\_|\\s).+\\.hash\\.txt$")
   )
   
   # Determine if each file in the file list is a necessary file, 

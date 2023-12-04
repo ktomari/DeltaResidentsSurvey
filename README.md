@@ -4,19 +4,21 @@ Thank you for your interest in the *source code repository* for the 2023 Delta R
 
 ## Quickstart
 
-For a more complete guide and documentation on this project, please visit the [DRS GitHub Page](https://ktomari.github.io/DeltaResidentsSurvey/).
+For a more complete guide, please read the [Core Functions Documentation](https://ktomari.github.io/DeltaResidentsSurvey/doc_drs_functions.html).
 
-Begin by downloading a copy of the DRS 2023 data set onto your local machine and begin writing *your* script with the line `source('drs_functions.R')`. This command loads the script with functions relevant to the DRS data. (At a future date, these functions will be incorporated into an R package.)
+1. Download drs_functions.R, or clone this repository using git.
 
-Next, determine the path of your local copy of the DRS data set. Importantly, the path we desire is the path to the **directory** containing the:
+2. Begin writing your script for analyzing the DRS data. At the top of this script, write `source('drs_functions.R')`. Please note that the argument inside `source()` is a string representing the path to the script which you downloaded in step 1. By running this `source` command, you will store the core data loading function, `drs_read()` to your R Environment.
 
-1. Data Dictionary (xlsx)
-2. Data (csv)
-3. Hash (txt)
+3. Download a copy of the [DRS 2023 data set](https://www.openicpsr.org/openicpsr/project/195447/version/V1/view?path=/openicpsr/195447/fcr:versions/V1/DRS-public-data_2023_12_01.zip&type=file) onto your local machine. If you cloned the repository, create a `/data` directory in the clone directory, and place the unzipped folder in `/data`. 
 
-While each of these files is needed to load the data, we do not need their individual file paths. While you are free to set the name of the directory as you please, do not change the names of the files themselves.
+4. Copy the path to the unzipped directory (eg. "User/Documents/DeltaResidentsSurvey/data/public_data"). While this directory should contain three files (see below), the path you need is to the directory, not the files within. If you're working from an R Project of a clone of this repository, your can use a relative path, eg "/data/public_data".
 
-Finally, execute `data <- drs_read('YOUR/PATH/HERE')` to read the data into the R environment. 
+    A. Data Dictionary (xlsx)
+    B. Data (csv)
+    C. Hash (txt)
+
+5. Finally, execute `data <- drs_read('YOUR/PATH/HERE')` to read the data into the R environment. 
 
 ### Quickstart Notes
 
