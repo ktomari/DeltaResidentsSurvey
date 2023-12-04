@@ -48,5 +48,5 @@ R version 4.3.2 (2023-10-31)
 
 ## License
 
-Forthcoming. In the intervening period, for information about licensing this source code, please contact Dr. Jessica Rudnick at UCSD/SeaGrant.
+The source code is licensed as GPLv3. For more information about citing the project, please contact the principal investigator Dr. Jessica Rudnick at UCSD/SeaGrant.
 
