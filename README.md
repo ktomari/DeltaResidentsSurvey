@@ -15,7 +15,9 @@ For a more complete guide, please read the [Core Functions Documentation](https:
 4. Copy the path to the unzipped directory (eg. "User/Documents/DeltaResidentsSurvey/data/public_data"). While this directory should contain three files (see below), the path you need is to the directory, not the files within. If you're working from an R Project of a clone of this repository, your can use a relative path, eg "/data/public_data".
 
     A. Data Dictionary (xlsx)
+    
     B. Data (csv)
+    
     C. Hash (txt)
 
 5. Finally, execute `data <- drs_read('YOUR/PATH/HERE')` to read the data into the R environment. 
@@ -29,6 +31,8 @@ Please review the documentation for further information describing the different
 ## Navigation
 
 * /admin - This directory contains miscellaneous code for administering this repository. It does not contain DRS data relevant code.
+
+* /docs - Files for the GitHub Page and documentation. You can download these directly, or view them rendered on the [project webpage](https://ktomari.github.io/DeltaResidentsSurvey/). 
 
 ## Versions & Dependencies
 
