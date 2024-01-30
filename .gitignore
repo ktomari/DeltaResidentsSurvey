@@ -3,6 +3,8 @@
 **/.DS_Store
 data/**
 quarto_code/
+notes.md
+archived/
 
 # History files
 .Rhistory

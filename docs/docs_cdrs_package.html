@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Delta Residents Survey - Survey Overview</title>
+<title>Delta Residents Survey - The {cdrs} Package</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -93,7 +127,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./overview.html" aria-current="page"> 
+    <a class="nav-link" href="./overview.html"> 
 <span class="menu-text">Overview</span></a>
   </li>  
   <li class="nav-item">
@@ -121,6 +155,17 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#installing-and-updating" id="toc-installing-and-updating" class="nav-link" data-scroll-target="#installing-and-updating">Installing and Updating</a>
+  <ul class="collapse">
+  <li><a href="#set-up" id="toc-set-up" class="nav-link" data-scroll-target="#set-up">1. Set up</a></li>
+  <li><a href="#install" id="toc-install" class="nav-link" data-scroll-target="#install">2. Install</a></li>
+  <li><a href="#updates" id="toc-updates" class="nav-link" data-scroll-target="#updates">3. Updates</a></li>
+  </ul></li>
+  <li><a href="#key-features" id="toc-key-features" class="nav-link" data-scroll-target="#key-features">Key Features</a>
+  <ul class="collapse">
+  <li><a href="#reading-drs-data" id="toc-reading-drs-data" class="nav-link" data-scroll-target="#reading-drs-data">Reading DRS Data</a></li>
+  <li><a href="#drs-with-survey" id="toc-drs-with-survey" class="nav-link" data-scroll-target="#drs-with-survey">DRS with {survey}</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -129,7 +174,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Survey Overview</h1>
+<h1 class="title">The {cdrs} Package</h1>
 </div>
 
 
@@ -146,24 +191,67 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><em>The following information was originally published in the 2023 Summary Report (available on the home page).</em></p>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>California relies on the Sacramento-San Joaquin Delta, the largest estuary on the west coast, that serves as a hub for freshwater resources distributed across the state, a biodiverse ecosystem, productive agricultural land, and a crossroads for statewide infrastructure and transportation networks. Historic towns, cultural resources, and recreational opportunities pepper the rural interior Delta, which lies only miles away from the significant metropolitan areas that make up the urban Delta perimeter. In 2009, the Delta Reform Act created the Delta Stewardship Council to advance California’s “coequal goals” for the Delta: “a more reliable statewide water supply and a resilient Delta ecosystem – in a manner that protects and enhances the unique characteristics of the Delta as an evolving place where people live, work, and recreate” (Wat. Code, § 85000 et seq.). The Council houses the Delta Science Program, which is tasked with providing the best possible scientific information to inform water and environmental management decisions for the Delta that aim to advance the coequal goals.</p>
-<p>Despite statutory guidance calling for a complex balance of competing needs in the estuary and science-informed decision-making, the social and human dimensions of the Delta have been vastly understudied to date, in comparison to the physical and ecological components of the system (Bidenweg; Delta Independent Science Board, Monitoring Enterprise Review; Delta Independent Science Board, Review of Research on the Sacraemnto-San Joaquin Delta as an Evolving Place). While decades of monitoring the ecological health of the system have informed management approaches for ecosystem recovery, there has been significantly less attention to monitoring or evaluating the social health of the estuary, including how people influence ecological outcomes of interest.</p>
-<p>In contexts like the Delta where people deeply impact and are impacted by the state of the natural system, understanding the people who live, work, play and depend on the environment is essential to developing effective and equitable management approaches. Moreover, people are at the heart of designing, supporting and implementing estuary recovery and resilience- building efforts, which are necessary in order to meet the state’s coequal goals for the Delta. Understanding and tracking change in the human dimensions of the estuary– such as residents’ opinions on regional priorities and concerns, stewardship behaviors, and experiences– will be essential to achieving the coequal goals.</p>
-<p>The development of the 2023 Delta Residents Survey is one of multiple recent efforts supported by the Delta Stewardship Council’s Social Science Integration Team and the Bay-Delta Social Science Community of Practice to begin better understanding and incorporating the human dimensions of the Delta into decision making. The Delta Residents Survey (DRS) was designed by a team of social science researchers working closely with Delta Stewardship Council staff, other partner state and local agencies, and community partners.</p>
-<p>The DRS had four substantive research aims:</p>
-<ol type="1">
-<li>Characterize residents’ sense of place;</li>
-<li>Assess well-being of a diverse and evolving population living in the region;</li>
-<li>Understand residents’ experiences and perceptions of environmental and climate changes across the estuary;</li>
-<li>Evaluate residents’ civic engagement and perceptions of governance in the region.</li>
-</ol>
-<p>The data were collected via a survey (available online and print version), with survey invitations sent by mail to a random sample of 82,000 households in the rural “Primary Zone” of the Delta (survey Zone 1), the suburban and urban “Secondary Zone” of the Delta (survey Zone 2) and Delta-adjacent “EJ Communities” in South Sacramento and South Stockton (survey Zone 3). The survey was available in English and Spanish. The survey included 43 multiple choice and short response questions, based on well-tested survey questions with input from the survey advisory group and Delta community members to ensure questions were appropriately locally tailored. See Table 1 below for a summary of the survey sections and Appendix A for the full survey tool.</p>
-<p>A total of 2,208 usable responses were received, constituting a 2.9% response rate, which is better than recent average response rates for randomized household surveys (CSU Institute for Social Research), and a margin of error of plus or minus 2.1%, given a 95% confidence interval. Survey analyses are based on weighted data to ensure results reflect demographically-representative sentiments. All details on methodology for survey design, distribution, data weighting and analysis can be found in Appendix B [of the Summary Report].</p>
+<p>The {cdrs} package for R is intended to make your analysis of the DRS data cleaner and more reproducible. Below, we discuss some of the key functions in this package. Visit the github repository <a href="https://github.com/ktomari/cdrs?tab=readme-ov-file#cdrs-">here</a>.</p>
+</section>
+<section id="installing-and-updating" class="level2">
+<h2 class="anchored" data-anchor-id="installing-and-updating">Installing and Updating</h2>
+<p>This package is not yet available on the official package repository of CRAN. As such, you will need to install it manually using a function from the package {devtools}. The {devtools} package helps R programmers do several tasks, but in our case it is used to install a package from GitHub.</p>
+<section id="set-up" class="level3">
+<h3 class="anchored" data-anchor-id="set-up">1. Set up</h3>
+<p>First, make sure you have {devtools} installed. You can run this script to see if you have it installed on your machine, if it not it will download and install it from CRAN.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"devtools"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">message</span>(<span class="st">"devtools has been successfully installed."</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">message</span>(<span class="st">"devtools is already installed."</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="install" class="level3">
+<h3 class="anchored" data-anchor-id="install">2. Install</h3>
+<p>Second, install {cdrs} from GitHub.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"ktomari/cdrs"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># you can then load it like any other package.</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cdrs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="updates" class="level3">
+<h3 class="anchored" data-anchor-id="updates">3. Updates</h3>
+<p>As of this writing, the package {cdrs} is actively being updated. Since it is not currently available on CRAN, you will have to check for updates manually. You may do so by checking our <a href="https://github.com/ktomari/cdrs/blob/main/NEWS.md">News</a> page to see if there have been updates. When updates are available, simply repeat step 2) <code>devtools::install_github("ktomari/cdrs")</code>.</p>
+</section>
+</section>
+<section id="key-features" class="level2">
+<h2 class="anchored" data-anchor-id="key-features">Key Features</h2>
+<section id="reading-drs-data" class="level3">
+<h3 class="anchored" data-anchor-id="reading-drs-data">Reading DRS Data</h3>
+<p>You can read the data in with <code>cdrs_read()</code> which has two arguments: the path to the zip or directory which contains the DRS data, and whether or not to convert <code>&lt;Missing&gt;</code> values into <code>NA</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>drs_data <span class="ot">&lt;-</span> cdrs<span class="sc">::</span><span class="fu">cdrs_read</span>(<span class="st">"Your/Path/Here"</span>, <span class="at">convert_to_NA =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If you want to see an example of this in action, use <code>cdrs_read_example()</code></p>
+</section>
+<section id="drs-with-survey" class="level3">
+<h3 class="anchored" data-anchor-id="drs-with-survey">DRS with {survey}</h3>
+<p>We rely on the {survey} package for much of the backend calculations of the DRS survey. This package is critical because it allows us to make proper estimations given the unique set of statistics necessary to analyze social survey data. You can learn more about how we approach survey statistics in our <a href="documentation.html">documentation</a>.</p>
+<p>The first step requires us to create a “survey design object” which specifies the complex sampling design that the DRS uses. We provide the conceptual details of how we specify this object in the <a href="doc_weights.html">weights</a> page, whereas below, we demonstrate its implementation with {cdrs}.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First we create a data subset of the variables we're interest in.</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The cdrs_subset() function subsets the variables of interest,</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># as well as the Zone and WTFINAL columns which we'll need later.</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>drs_subset <span class="ot">&lt;-</span> cdrs<span class="sc">::</span><span class="fu">cdrs_subset</span>(drs_data, <span class="st">"Q2"</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Second, we create the survey design object, which can later be used with</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># {survey} functions like svytable.</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>svydes_obj <span class="ot">&lt;-</span> cdrs<span class="sc">::</span><span class="fu">cdrs_design</span>(drs_subset, <span class="at">set_fpc =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
