@@ -309,7 +309,7 @@ Note
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>designQ2 <span class="ot">&lt;-</span> <span class="fu">svydesign</span>(</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># This arg specifies cluster ids. In our case, the DRS has none.</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">ids =</span> <span class="sc">~</span><span class="dv">1</span>,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># The finite population correction is largely unimportant in our case.</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># The inclusion of the finite population correction, in this example, was not demonstrated affect the frequencies, so they are excluded here.</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">fpc =</span> <span class="cn">NULL</span>,</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># The cleaned data set, including the removal of missing values.</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> subsetQ2,</span>
@@ -321,7 +321,7 @@ Note
 </div>
 <p>Finally, we can calculate the weighted frequencies of the various categories in <code>Q2</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>prop <span class="ot">&lt;-</span> <span class="fu">svymean</span>(</span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>prop <span class="ot">&lt;-</span> survey<span class="sc">::</span><span class="fu">svymean</span>(</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># x is the formula</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="sc">~</span> Q2,</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">design =</span> designQ2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -336,16 +336,21 @@ Formulas
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>For more advanced users, be aware that you can also write the formula in a way that’s more programmatic. For instance, if you stored your variable of interest <code>Q2</code> in a vector (eg. <code>var_ = "Q2"</code>), you could write the formula for <code>svymean</code> (or any other formula-taking function) with <code>as.formula()</code>. In this case, we would specify it like this:</p>
-<p><code>svymean(x = as.formula(paste0("~", var_)), ...)</code></p>
-</div>
-</div>
-<p>Maybe you want to see the breakdown of the variable <code>Q2</code> by <code>Zone</code>? In this case we can use <code>svytable</code>.</p>
+<p>For more advanced users, be aware that you can also write the formula in a way that’s more programmatic. For instance, if you stored the name of your variable of interest, <code>Q2</code>, in a vector (eg. <code>var_ &lt;- "Q2"</code>), you could write the formula for <code>svymean</code> (or any other formula-taking function) with <code>as.formula()</code>. In this case, we would specify it like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>prop <span class="ot">&lt;-</span> <span class="fu">svytable</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># note, `x` is now `formula`, and we no longer need to specify `data`.</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> <span class="fu">as.formula</span>(<span class="fu">paste0</span>(<span class="st">"~"</span>, <span class="st">"Q2"</span>, <span class="st">" + "</span>, <span class="st">"Zone"</span>)), </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">design =</span> designQ2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">svymean</span>(<span class="at">x =</span> <span class="fu">as.formula</span>(<span class="fu">paste0</span>(<span class="st">"~"</span>, var_)), </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">design =</span> designQ2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<p>Here is another example of calculating weighted frequencies. Maybe this time you want to see the breakdown of the variable <code>Q2</code> by <code>Zone</code>? To accomplish this, we can use <code>svytable()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>prop <span class="ot">&lt;-</span> survey<span class="sc">::</span><span class="fu">svytable</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Note, `x` is now `formula`,</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># and for fun, we specified the formula using `as.formula`.</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Alternatively, we could have supplied `~ Q2 + Zone`</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> <span class="fu">as.formula</span>(<span class="fu">paste0</span>(<span class="st">"~"</span>, <span class="st">"Q2"</span>, <span class="st">" + "</span>, <span class="st">"Zone"</span>)), </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">design =</span> designQ2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="sec-package" class="level2">
