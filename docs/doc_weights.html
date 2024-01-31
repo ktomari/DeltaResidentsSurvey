@@ -206,9 +206,9 @@ window.Quarto = {
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#complex-sampling-design" id="toc-complex-sampling-design" class="nav-link" data-scroll-target="#complex-sampling-design">Complex Sampling Design</a></li>
   <li><a href="#why-are-weights-important-and-what-are-they" id="toc-why-are-weights-important-and-what-are-they" class="nav-link" data-scroll-target="#why-are-weights-important-and-what-are-they">Why are weights important, and what are they?</a></li>
-  <li><a href="#drs-weights" id="toc-drs-weights" class="nav-link" data-scroll-target="#drs-weights">DRS Weights</a></li>
+  <li><a href="#the-construction-of-drs-weights" id="toc-the-construction-of-drs-weights" class="nav-link" data-scroll-target="#the-construction-of-drs-weights">The Construction of DRS Weights</a></li>
   <li><a href="#using-drs-weights-an-example" id="toc-using-drs-weights-an-example" class="nav-link" data-scroll-target="#using-drs-weights-an-example">Using DRS Weights: An Example</a></li>
-  <li><a href="#using-cdrs" id="toc-using-cdrs" class="nav-link" data-scroll-target="#using-cdrs">Using {cdrs}</a></li>
+  <li><a href="#sec-package" id="toc-sec-package" class="nav-link" data-scroll-target="#sec-package">Using the cdrs package</a></li>
   </ul>
 </nav>
     </div>
@@ -257,7 +257,7 @@ Note
 </section>
 <section id="why-are-weights-important-and-what-are-they" class="level2">
 <h2 class="anchored" data-anchor-id="why-are-weights-important-and-what-are-they">Why are weights important, and what are they?</h2>
-<p>In order to mitigate issues with bias, we use post-hoc survey weights to estimate the survey population <span class="citation" data-cites="heeringa_applied_2017">(<a href="#ref-heeringa_applied_2017" role="doc-biblioref">Heeringa, West, and Berglund 2017, p38</a>)</span>. Weights are often used to adjust for differences in selection probabilities, non-response, and to align the sample more closely with the population structure. Weights are needed in most surveys because survey sampling plans usually deviate from <em>Simple Random Sampling (SRS)</em> (where every unit in the population has an equal chance of selection, is often impractical or insufficient for complex survey objectives).</p>
+<p>In order to mitigate issues with bias, we use post-hoc survey weights to estimate the survey population <span class="citation" data-cites="heeringa_applied_2017">(<a href="#ref-heeringa_applied_2017" role="doc-biblioref">Heeringa, West, and Berglund 2017, p38</a>)</span>. Weights are often used to adjust for differences in selection probabilities, non-response, self-selection, and to align the sample more closely with the population structure. Weights are needed in most surveys because survey sampling plans usually deviate from <em>Simple Random Sampling (SRS)</em> (in which every unit in the population has an equal chance of selection, often impractical or insufficient for complex survey objectives).</p>
 <blockquote class="blockquote">
 <p>Relative to SRS, the need to apply weights to complex sample survey data changes the approach to estimation of population statistics or model parameters. Also relative to SRS designs, stratification, cluster sampling, and weighting all influence the sizes of standard errors for survey estimates. <span class="citation" data-cites="heeringa_applied_2017">(<a href="#ref-heeringa_applied_2017" role="doc-biblioref">Heeringa, West, and Berglund 2017, p26</a>)</span></p>
 </blockquote>
@@ -268,8 +268,8 @@ Note
 </blockquote>
 <p>In summary, survey weights can be conceptualized as a numeric score that increases or decreases each respondent’s importance in building population estimators, like the mean length of residency or the proportion of a categorical variable like types of housing. Survey weights are an important (partial) corrective to biases introduced by a complex survey design and external factors. Given our intent to correctly represent the views expressed by residents of the Delta, we should use survey weights.</p>
 </section>
-<section id="drs-weights" class="level2">
-<h2 class="anchored" data-anchor-id="drs-weights">DRS Weights</h2>
+<section id="the-construction-of-drs-weights" class="level2">
+<h2 class="anchored" data-anchor-id="the-construction-of-drs-weights">The Construction of DRS Weights</h2>
 <p>The DRS survey weights were constructed by Marketing Systems Group (MSG).</p>
 <blockquote class="blockquote">
 <p>Weights for this survey were computed using the WgtAdjust procedure of SUDAAN, which relies on a constrained logistic model to predict the likelihood of response as a function of a set of explanatory variables <span class="citation" data-cites="marketing_systems_group_weighting_2023">(<a href="#ref-marketing_systems_group_weighting_2023" role="doc-biblioref">Marketing Systems Group and Fahimi 2023</a>)</span>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
@@ -278,8 +278,10 @@ Note
 </section>
 <section id="using-drs-weights-an-example" class="level2">
 <h2 class="anchored" data-anchor-id="using-drs-weights-an-example">Using DRS Weights: An Example</h2>
-<p>In the following code chunks we demonstrate the basic process of developing weighted frequencies in the R-language for a single variable from the survey, <code>Q2</code>. The R object <code>data</code> represents the full survey results from the public version of the DRS data set. We make the following assumptions:</p>
+<p>In the following code chunks, we demonstrate the basic process of developing weighted frequencies in the R-language for a single variable from the survey, <code>Q2</code>. This demonstration is provided to explain how to approach such an analysis, however we encourage you to use the {cdrs} package in your actual analysis (see <a href="#sec-package" class="quarto-xref">Section&nbsp;6</a>).</p>
+<p>In the code that follows, we make the following assumptions:</p>
 <ul>
+<li>The R object <code>data</code> represents the full survey results from the public version of the DRS data set.</li>
 <li>The column <code>Q2</code> which represents question 2 on the survey, has missing values represented as <code>NA</code>. In other words, the different <em>types</em> of <a href="doc_missing_and_ordinal.html">missing values</a> have already been reduced to a uniform <code>NA</code> value. We also assume <code>Q2</code> started out as the R class <code>factor</code>. Remember, R factors are a data type that represents categorical information with a limited number of levels, eg. “Lives in the Delta”.</li>
 <li>We primarily rely on two packages: survey, and tidyverse. We assume you have a basic understanding of the {tidyverse}, such as the role of pipes <code>%&gt;%</code>.</li>
 </ul>
@@ -346,8 +348,8 @@ Formulas
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">design =</span> designQ2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="using-cdrs" class="level2">
-<h2 class="anchored" data-anchor-id="using-cdrs">Using {cdrs}</h2>
+<section id="sec-package" class="level2">
+<h2 class="anchored" data-anchor-id="sec-package">Using the cdrs package</h2>
 <p>In practice, we highly recommend you use the package {cdrs} to reduce chances of user error, to reduce coding, and to create more reproducible code documents. Learn more:</p>
 <ul>
 <li><a href="doc_cdrs_package.html">Documentation</a></li>
