@@ -220,8 +220,8 @@
     "objectID": "index.html#package-repository",
     "href": "index.html#package-repository",
     "title": "Introduction",
-    "section": "Package Repository ",
-    "text": "Package Repository \nIn order to facilitate other researchers to better utilize the DRS data, we are creating an R-language package, {cdrs}. While its still a work in progress, the core functions are already available. We hope with this package that data users will be able to create reproducible code. Visit the package repository and the documentation to learn more."
+    "section": "Package Repository",
+    "text": "Package Repository\n\n\n\nIn order to facilitate other researchers to better utilize the DRS data, we are creating an R-language package, {cdrs}. While its still a work in progress, the core functions are already available. We hope with this package that data users will be able to create reproducible code. Visit the package repository and the documentation to learn more."
   },
   {
     "objectID": "index.html#data",
