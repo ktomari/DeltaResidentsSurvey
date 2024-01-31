@@ -53,14 +53,14 @@
     "href": "documentation.html",
     "title": "Documentation",
     "section": "",
-    "text": "The {cdrs} Package: An R package to facilitate reproducible analysis of the DRS data set.\nOrdinal & Missing Data: This chapter describes how the DRS data set has special metadata that describes the underlying data structure. While this chapter only briefly discusses the “code” per se, it more fully describes how to interpret the data we provide.\nCore Functions: The core functions to load the DRS 2023 data set. Notice: This document contains important pseudo-code to aid others in reproducing the core reading function. However, these functions have been superseded by the new {cdrs} package listed above."
+    "text": "The hyperlinks presented in the list below each link to a separate chapter with detailed documentation directed at researchers using the DRS data set.1\n\n\n\n\nThe {cdrs} Package: An R package to facilitate reproducible analysis of the DRS data set.\nOrdinal & Missing Data: This chapter describes how the DRS data set has special metadata that describes the underlying data structure. While this chapter only briefly discusses the “code” per se, it more fully describes how to interpret the data we provide.\nCore Functions: The core functions to load the DRS 2023 data set. Notice: This document contains important pseudo-code to aid non-R users in reproducing the core reading function. However, the actual code here has been superseded by the new {cdrs} package listed above."
   },
   {
     "objectID": "documentation.html#source-code",
     "href": "documentation.html#source-code",
     "title": "Documentation",
     "section": "",
-    "text": "The {cdrs} Package: An R package to facilitate reproducible analysis of the DRS data set.\nOrdinal & Missing Data: This chapter describes how the DRS data set has special metadata that describes the underlying data structure. While this chapter only briefly discusses the “code” per se, it more fully describes how to interpret the data we provide.\nCore Functions: The core functions to load the DRS 2023 data set. Notice: This document contains important pseudo-code to aid others in reproducing the core reading function. However, these functions have been superseded by the new {cdrs} package listed above."
+    "text": "The hyperlinks presented in the list below each link to a separate chapter with detailed documentation directed at researchers using the DRS data set.1\n\n\n\n\nThe {cdrs} Package: An R package to facilitate reproducible analysis of the DRS data set.\nOrdinal & Missing Data: This chapter describes how the DRS data set has special metadata that describes the underlying data structure. While this chapter only briefly discusses the “code” per se, it more fully describes how to interpret the data we provide.\nCore Functions: The core functions to load the DRS 2023 data set. Notice: This document contains important pseudo-code to aid non-R users in reproducing the core reading function. However, the actual code here has been superseded by the new {cdrs} package listed above."
   },
   {
     "objectID": "documentation.html#survey-methods",
@@ -68,6 +68,13 @@
     "title": "Documentation",
     "section": "Survey Methods",
     "text": "Survey Methods\nPlease see the Summary Report on the Home page for detailed description of our survey methods.\n\nSurvey Weights: A brief introduction to survey weights. We will attempt to answer: what are weights, why are they important, and how should they be used in the DRS?"
+  },
+  {
+    "objectID": "documentation.html#footnotes",
+    "href": "documentation.html#footnotes",
+    "title": "Documentation",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nThere are separate code repositories with their own sets of documentation as well. The documentation therein are directed at those interested in augmenting the source code, rather than simply utilizing it. If you wish to address bugs or make contributions, we refer you to the GitHub repositories. There are currently two public-facing repositories: the one from which this website was created (which also contains ‘core functions’ for posterity), and the package repository. The latter repository is where the bulk of the tools for the analysis of the DRS data are stored.↩︎"
   },
   {
     "objectID": "doc_weights.html",
