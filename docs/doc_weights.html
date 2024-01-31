@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Delta Residents Survey - Survey Weights</title>
+<title>Delta Residents Survey - Survey Weights &amp; Complex Survey Designs</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -204,9 +204,10 @@ window.Quarto = {
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#what-are-weights-and-why-are-they-important" id="toc-what-are-weights-and-why-are-they-important" class="nav-link" data-scroll-target="#what-are-weights-and-why-are-they-important">What are weights and why are they important?</a></li>
+  <li><a href="#complex-sampling-design" id="toc-complex-sampling-design" class="nav-link" data-scroll-target="#complex-sampling-design">Complex Sampling Design</a></li>
+  <li><a href="#why-are-weights-important-and-what-are-they" id="toc-why-are-weights-important-and-what-are-they" class="nav-link" data-scroll-target="#why-are-weights-important-and-what-are-they">Why are weights important, and what are they?</a></li>
   <li><a href="#drs-weights" id="toc-drs-weights" class="nav-link" data-scroll-target="#drs-weights">DRS Weights</a></li>
-  <li><a href="#example-of-how-to-use-weights-with-drs-data" id="toc-example-of-how-to-use-weights-with-drs-data" class="nav-link" data-scroll-target="#example-of-how-to-use-weights-with-drs-data">Example of How to Use Weights with DRS Data</a></li>
+  <li><a href="#using-drs-weights-an-example" id="toc-using-drs-weights-an-example" class="nav-link" data-scroll-target="#using-drs-weights-an-example">Using DRS Weights: An Example</a></li>
   <li><a href="#using-cdrs" id="toc-using-cdrs" class="nav-link" data-scroll-target="#using-cdrs">Using {cdrs}</a></li>
   </ul>
 </nav>
@@ -216,7 +217,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Survey Weights</h1>
+<h1 class="title">Survey Weights &amp; Complex Survey Designs</h1>
 </div>
 
 
@@ -235,7 +236,7 @@ window.Quarto = {
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>In this chapter we will explore the importance and role of survey weights in the Delta Residents Survey (DRS).</p>
+<p>In this chapter we will explore the importance and role of survey weights in the Delta Residents Survey (DRS), as well as a broader discussion on complex sampling design. In general, quantitative inferential survey analysis involves a special branch of statistics that accounts for the unique qualities and assumptions of survey methodologies. Be advised that a proper statistical analysis cannot be conducted without the consideration of the complex sampling design of our survey.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -246,31 +247,38 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Please note that this document is in draft form! Some of the technical notes and citations have yet to be verified and reviewed.</p>
+<p>Please note that this document is in draft form! Some of the technical notes and citations have yet to be reviewed. Although the author of this chapter is trained in statistics, the author is not a subject matter expert in the field of statistics. The guidance and information provided below should be considered provisional.</p>
 </div>
 </div>
 </section>
-<section id="what-are-weights-and-why-are-they-important" class="level2">
-<h2 class="anchored" data-anchor-id="what-are-weights-and-why-are-they-important">What are weights and why are they important?</h2>
-<p>In order to mitigate issues with bias, we use post-hoc survey weights to estimate the survey population <span class="citation" data-cites="heeringa_applied_2017">(<a href="#ref-heeringa_applied_2017" role="doc-biblioref">Heeringa, West, and Berglund 2017, p38</a>)</span>. Weights are needed in most surveys because survey sampling plans usually deviate from <em>Simple Random Sampling (SRS)</em> (ibid, 26).</p>
-<blockquote class="blockquote">
-<p>A simple but useful device for “visualizing” the role of case-specific weights in survey data analysis is to consider the weight as the number (or share) of the population elements that is represented by the sample observation. Observation i, sampled with probability <span class="math inline">\(f_i = \frac{1}{10}\)</span>, represents 10 individuals in the population (herself and 9 others). <span class="citation" data-cites="heeringa_applied_2017">(<a href="#ref-heeringa_applied_2017" role="doc-biblioref">Heeringa, West, and Berglund 2017, p38</a>)</span></p>
-</blockquote>
+<section id="complex-sampling-design" class="level2">
+<h2 class="anchored" data-anchor-id="complex-sampling-design">Complex Sampling Design</h2>
+<p>The Delta Residents Survey involves a probability-based complex sampling plan with stratified sampling across geographical zones and systematic application of survey weights to adjust for variable inclusion probabilities and response rates. This plan is considered a probability sampling method because it involves random selection processes within predefined strata (ie. the Delta zones) and applies systematic weighting. This method ensures that every household has a known probability of selection, allowing for the representation of the entire population within the survey sample.</p>
+</section>
+<section id="why-are-weights-important-and-what-are-they" class="level2">
+<h2 class="anchored" data-anchor-id="why-are-weights-important-and-what-are-they">Why are weights important, and what are they?</h2>
+<p>In order to mitigate issues with bias, we use post-hoc survey weights to estimate the survey population <span class="citation" data-cites="heeringa_applied_2017">(<a href="#ref-heeringa_applied_2017" role="doc-biblioref">Heeringa, West, and Berglund 2017, p38</a>)</span>. Weights are often used to adjust for differences in selection probabilities, non-response, and to align the sample more closely with the population structure. Weights are needed in most surveys because survey sampling plans usually deviate from <em>Simple Random Sampling (SRS)</em> (where every unit in the population has an equal chance of selection, is often impractical or insufficient for complex survey objectives).</p>
 <blockquote class="blockquote">
 <p>Relative to SRS, the need to apply weights to complex sample survey data changes the approach to estimation of population statistics or model parameters. Also relative to SRS designs, stratification, cluster sampling, and weighting all influence the sizes of standard errors for survey estimates. <span class="citation" data-cites="heeringa_applied_2017">(<a href="#ref-heeringa_applied_2017" role="doc-biblioref">Heeringa, West, and Berglund 2017, p26</a>)</span></p>
 </blockquote>
+<p>In other words, various approaches to the design of the survey sampling procedure introduce <em>effects</em> on the accuracy and precision of survey estimators (ibid, 26). In the DRS, survey weights are employed to account for different inclusion probabilities due to stratification (ie. the differential sampling between Delta zones), and due to external factors like non-response or self-selection bias.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>In the excerpt below, Heeringa et al discuss one approach to conceptualizing how weights relate to individual survey responses:</p>
+<blockquote class="blockquote">
+<p>A simple but useful device for “visualizing” the role of case-specific weights in survey data analysis is to consider the weight as the number (or share) of the population elements that is represented by the sample observation. Observation i, sampled with probability <span class="math inline">\(f_i = \frac{1}{10}\)</span>, represents 10 individuals in the population (herself and 9 others). <span class="citation" data-cites="heeringa_applied_2017">(<a href="#ref-heeringa_applied_2017" role="doc-biblioref">Heeringa, West, and Berglund 2017, p38</a>)</span></p>
+</blockquote>
+<p>In summary, survey weights can be conceptualized as a numeric score that increases or decreases each respondent’s importance in building population estimators, like the mean length of residency or the proportion of a categorical variable like types of housing. Survey weights are an important (partial) corrective to biases introduced by a complex survey design and external factors. Given our intent to correctly represent the views expressed by residents of the Delta, we should use survey weights.</p>
 </section>
 <section id="drs-weights" class="level2">
 <h2 class="anchored" data-anchor-id="drs-weights">DRS Weights</h2>
-<p>The DRS survey weights were calculated by Marketing Systems Group (MSG).</p>
+<p>The DRS survey weights were constructed by Marketing Systems Group (MSG).</p>
 <blockquote class="blockquote">
-<p>Weights for this survey were computed using the WgtAdjust procedure of SUDAAN, which relies on a constrained logistic model to predict the likelihood of response as a function of a set of explanatory variables <span class="citation" data-cites="marketing_systems_group_weighting_2023">(<a href="#ref-marketing_systems_group_weighting_2023" role="doc-biblioref">Marketing Systems Group and Fahimi 2023</a>)</span>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>Weights for this survey were computed using the WgtAdjust procedure of SUDAAN, which relies on a constrained logistic model to predict the likelihood of response as a function of a set of explanatory variables <span class="citation" data-cites="marketing_systems_group_weighting_2023">(<a href="#ref-marketing_systems_group_weighting_2023" role="doc-biblioref">Marketing Systems Group and Fahimi 2023</a>)</span>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 </blockquote>
-<p>A full description of the weighting methodology was prepared by MSG and is supplied in the 2023 Summary Report available on the <a href="index.html">home page</a>.</p>
+<p>A more expansive description of the weighting methodology was prepared by MSG and is supplied in the 2023 Summary Report available on the <a href="index.html">home page</a>.</p>
 </section>
-<section id="example-of-how-to-use-weights-with-drs-data" class="level2">
-<h2 class="anchored" data-anchor-id="example-of-how-to-use-weights-with-drs-data">Example of How to Use Weights with DRS Data</h2>
-<p>In the following code chunks we demonstrate the basic process of developing weighted frequencies for a single variable from the survey, <code>Q2</code>. The object <code>data</code> represents the full survey results from the public version of the DRS data set. We make the following assumptions:</p>
+<section id="using-drs-weights-an-example" class="level2">
+<h2 class="anchored" data-anchor-id="using-drs-weights-an-example">Using DRS Weights: An Example</h2>
+<p>In the following code chunks we demonstrate the basic process of developing weighted frequencies in the R-language for a single variable from the survey, <code>Q2</code>. The R object <code>data</code> represents the full survey results from the public version of the DRS data set. We make the following assumptions:</p>
 <ul>
 <li>The column <code>Q2</code> which represents question 2 on the survey, has missing values represented as <code>NA</code>. In other words, the different <em>types</em> of <a href="doc_missing_and_ordinal.html">missing values</a> have already been reduced to a uniform <code>NA</code> value. We also assume <code>Q2</code> started out as the R class <code>factor</code>. Remember, R factors are a data type that represents categorical information with a limited number of levels, eg. “Lives in the Delta”.</li>
 <li>We primarily rely on two packages: survey, and tidyverse. We assume you have a basic understanding of the {tidyverse}, such as the role of pipes <code>%&gt;%</code>.</li>
@@ -287,10 +295,10 @@ Note
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Drop factors that are unused.</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Q2 =</span> <span class="fu">fct_drop</span>(<span class="fu">as_factor</span>(Q2)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Second, we stipulate the “survey design” which describes the design of our complex survey in a format that statistical functions from the {survey} package can comprehend. Here, we will explain our reasoning for how we defined each parameter in <code>survey::svydesign()</code>. For more details, please see the <a href="https://cran.r-project.org/web/packages/survey/survey.pdf">documentation</a> for this function.</p>
+<p>Second, we stipulate the “survey design” which describes the design of our complex survey in a format that statistical functions from the {survey} package can utilize. Here, we will explain our reasoning for how we defined each parameter in <code>survey::svydesign()</code>. For more details, please see the <a href="https://cran.r-project.org/web/packages/survey/survey.pdf">documentation</a> for this function.</p>
 <ul>
 <li><code>ids</code>: This refers to cluster sampling, a method we did not employ. The <code>~1</code> simply indicates there is no clustering.</li>
-<li><code>fpc</code>: This defines the ‘finite population correction’. According to Heeringa et al. <span class="citation" data-cites="heeringa_applied_2017">(<a href="#ref-heeringa_applied_2017" role="doc-biblioref">2017</a>)</span>, the fpc “reflects the expected reduction in the sampling variance of a survey statistic due to sampling [without replacement]” (p24). We would assume our fpc approaches <code>1</code> when our sample is much smaller than the total population (N) we’re estimating. For our survey’s three zones, only Zone 1 has a sample that might be considered important for the fpc, with 326 responses out of a total population of 11,727 (2.78%). We are thus presented with two options: specify the <code>fpc</code> assuming our sample does not approach N, or specify the <code>fpc</code> to account for the different populations by Zone.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> In practice, we did not see a difference when estimating weighted frequencies.</li>
+<li><code>fpc</code>: This defines the ‘finite population correction’. According to Heeringa et al. <span class="citation" data-cites="heeringa_applied_2017">(<a href="#ref-heeringa_applied_2017" role="doc-biblioref">2017</a>)</span>, the fpc “reflects the expected reduction in the sampling variance of a survey statistic due to sampling [without replacement]” (p24). We would assume our fpc has little effect (and approaches <code>1</code>) when our sample is much smaller than the total population (N) we’re estimating. For our survey’s three zones, only Zone 1 has a sample that might be considered important for the fpc: we have 326 responses out of a total population of 11,727 (2.78%). We are thus presented with two options: specify the <code>fpc</code> as <code>NULL</code> and that no correction needs to be made (given that 2.78% may still be considered sufficiently small), or specify the <code>fpc</code> to account for the different populations by Zone.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> In practice, we did not see a difference when estimating weighted frequencies.</li>
 <li><code>data</code>: The subsetted data. Importantly, this data cannot have any missing values for the weight column, <code>WTFINAL</code>.</li>
 <li><code>strata</code>: The column that specifies the strata, in our case <code>Zone</code>.</li>
 <li><code>weights</code>: The column that specifies the weights, in our case <code>WTFINAL</code>.</li>
@@ -326,7 +334,7 @@ Formulas
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>You can also write the formula in a way that’s more programmatic. For instance, if you stored your variable of interest <code>Q2</code> in an R vector (eg. <code>var_ = "Q2"</code>), you could write the formula for <code>svymean</code> (or any other formula-taking function) with <code>as.formula</code>. In this case, we would specify it like this:</p>
+<p>For more advanced users, be aware that you can also write the formula in a way that’s more programmatic. For instance, if you stored your variable of interest <code>Q2</code> in a vector (eg. <code>var_ = "Q2"</code>), you could write the formula for <code>svymean</code> (or any other formula-taking function) with <code>as.formula()</code>. In this case, we would specify it like this:</p>
 <p><code>svymean(x = as.formula(paste0("~", var_)), ...)</code></p>
 </div>
 </div>
@@ -364,8 +372,9 @@ Research Triangle Institute. 2012. <em><span>SUDAAN</span> Language Manual, Rele
 </div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p>MSG cites the SUDAAN Manual <span class="citation" data-cites="research_triangle_institute_sudaan_2012">(<a href="#ref-research_triangle_institute_sudaan_2012" role="doc-biblioref">Research Triangle Institute 2012</a>)</span>, and they likely meant to refer to the <code>WTADJUST</code> procedure. A copy of the SUDAAN manual can be made available by the DRS team upon request.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>In order to specify the fpc, this is the approach to take: 1) Create a data.frame with the total population (<code>N = c(11727, 540340, 166085)</code>) for each Zone (<code>Zone = c(1, 2, 3)</code>). 2) Merge the DRS data with this data.frame using <code>dplyr::left_join</code>. 3) Specify <code>svydesign</code> such that the parameter <code>fpc</code> equal <code>~ N</code>, where <code>N</code> is the column with the total population for the three Zones.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Non-response introduces bias when households selected to be surveyed do not respond. This may occur regardless of the household’s willingness to participate, eg. socio-economic barriers effect the timely delivery of surveys. Whereas, self-selection bias occurs when the likelihood of participation in the survey is not random but influenced by characteristics of the individuals. This bias can lead to certain viewpoints or demographic profiles being overrepresented or underrepresented in the survey data.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>MSG cites the SUDAAN Manual <span class="citation" data-cites="research_triangle_institute_sudaan_2012">(<a href="#ref-research_triangle_institute_sudaan_2012" role="doc-biblioref">Research Triangle Institute 2012</a>)</span>, and they likely meant to refer to the <code>WTADJUST</code> procedure. A copy of the SUDAAN manual can be made available by the DRS team upon request.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>In order to specify the fpc, this is the approach to take: 1) Create a data.frame with the total population (<code>N = c(11727, 540340, 166085)</code>) for each Zone (<code>Zone = factor(c(1, 2, 3))</code>). 2) Merge the DRS data with this data.frame using <code>dplyr::left_join</code>. 3) Specify <code>svydesign</code> such that the parameter <code>fpc</code> equal <code>~ N</code>, where <code>N</code> is the column with the total population for the three Zones.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
