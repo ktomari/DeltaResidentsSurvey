@@ -278,7 +278,7 @@ Note
 </section>
 <section id="using-drs-weights-an-example" class="level2">
 <h2 class="anchored" data-anchor-id="using-drs-weights-an-example">Using DRS Weights: An Example</h2>
-<p>In the following code chunks, we demonstrate the basic process of developing weighted frequencies in the R-language for a single variable from the survey, <code>Q2</code>. This demonstration is provided to explain how to approach such an analysis, however we encourage you to use the {cdrs} package in your actual analysis (see <a href="#sec-package" class="quarto-xref">Section&nbsp;6</a>).</p>
+<p>In the following code chunks, we demonstrate the basic process of developing weighted proportions or frequencies in the R-language for a single variable from the survey, <code>Q2</code>. This demonstration is provided to explain how to approach such an analysis, however we encourage you to use the {cdrs} package in your actual analysis (see <a href="#sec-package" class="quarto-xref">Section&nbsp;6</a>).</p>
 <p>In the code that follows, we make the following assumptions:</p>
 <ul>
 <li>The R object <code>data</code> represents the full survey results from the public version of the DRS data set.</li>
@@ -300,7 +300,7 @@ Note
 <p>Second, we stipulate the “survey design” which describes the design of our complex survey in a format that statistical functions from the {survey} package can utilize. Here, we will explain our reasoning for how we defined each parameter in <code>survey::svydesign()</code>. For more details, please see the <a href="https://cran.r-project.org/web/packages/survey/survey.pdf">documentation</a> for this function.</p>
 <ul>
 <li><code>ids</code>: This refers to cluster sampling, a method we did not employ. The <code>~1</code> simply indicates there is no clustering.</li>
-<li><code>fpc</code>: This defines the ‘finite population correction’. According to Heeringa et al. <span class="citation" data-cites="heeringa_applied_2017">(<a href="#ref-heeringa_applied_2017" role="doc-biblioref">2017</a>)</span>, the fpc “reflects the expected reduction in the sampling variance of a survey statistic due to sampling [without replacement]” (p24). We would assume our fpc has little effect (and approaches <code>1</code>) when our sample is much smaller than the total population (N) we’re estimating. For our survey’s three zones, only Zone 1 has a sample that might be considered important for the fpc: we have 326 responses out of a total population of 11,727 (2.78%). We are thus presented with two options: specify the <code>fpc</code> as <code>NULL</code> and that no correction needs to be made (given that 2.78% may still be considered sufficiently small), or specify the <code>fpc</code> to account for the different populations by Zone.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> In practice, we did not see a difference when estimating weighted frequencies.</li>
+<li><code>fpc</code>: This defines the ‘finite population correction’. According to Heeringa et al. <span class="citation" data-cites="heeringa_applied_2017">(<a href="#ref-heeringa_applied_2017" role="doc-biblioref">2017</a>)</span>, the fpc “reflects the expected reduction in the sampling variance of a survey statistic due to sampling [without replacement]” (p24). We would assume our fpc has little effect (and approaches <code>1</code>) when our sample is much smaller than the total population (N) we’re estimating. For our survey’s three zones, only Zone 1 has a sample that might be considered important for the fpc: we have 326 responses out of a total population of 11,727 (2.78%). We are thus presented with two options: specify the <code>fpc</code> as <code>NULL</code> and that no correction needs to be made (given that 2.78% may still be considered sufficiently small), or specify the <code>fpc</code> to account for the different populations by Zone.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> In practice, we did not see a difference when estimating weighted proportions/frequencies.</li>
 <li><code>data</code>: The subsetted data. Importantly, this data cannot have any missing values for the weight column, <code>WTFINAL</code>.</li>
 <li><code>strata</code>: The column that specifies the strata, in our case <code>Zone</code>.</li>
 <li><code>weights</code>: The column that specifies the weights, in our case <code>WTFINAL</code>.</li>
@@ -319,7 +319,7 @@ Note
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">weights =</span> <span class="sc">~</span> WTFINAL</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Finally, we can calculate the weighted frequencies of the various categories in <code>Q2</code>.</p>
+<p>Finally, we can calculate the weighted proportions of the various categories in <code>Q2</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>prop <span class="ot">&lt;-</span> survey<span class="sc">::</span><span class="fu">svymean</span>(</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># x is the formula</span></span>
@@ -345,7 +345,7 @@ Formulas
 </div>
 <p>Here is another example of calculating weighted frequencies. Maybe this time you want to see the breakdown of the variable <code>Q2</code> by <code>Zone</code>? To accomplish this, we can use <code>svytable()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>prop <span class="ot">&lt;-</span> survey<span class="sc">::</span><span class="fu">svytable</span>(</span>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>freq <span class="ot">&lt;-</span> survey<span class="sc">::</span><span class="fu">svytable</span>(</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Note, `x` is now `formula`,</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># and for fun, we specified the formula using `as.formula`.</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Alternatively, we could have supplied `~ Q2 + Zone`</span></span>

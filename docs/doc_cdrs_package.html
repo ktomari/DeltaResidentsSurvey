@@ -157,9 +157,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#installing-and-updating" id="toc-installing-and-updating" class="nav-link" data-scroll-target="#installing-and-updating">Installing and Updating</a>
   <ul class="collapse">
-  <li><a href="#set-up" id="toc-set-up" class="nav-link" data-scroll-target="#set-up">1. Set up</a></li>
-  <li><a href="#install" id="toc-install" class="nav-link" data-scroll-target="#install">2. Install</a></li>
-  <li><a href="#updates" id="toc-updates" class="nav-link" data-scroll-target="#updates">3. Updates</a></li>
+  <li><a href="#set-up-devtools" id="toc-set-up-devtools" class="nav-link" data-scroll-target="#set-up-devtools">1. Set up devtools</a></li>
+  <li><a href="#install-cdrs" id="toc-install-cdrs" class="nav-link" data-scroll-target="#install-cdrs">2. Install cdrs</a></li>
+  <li><a href="#update-cdrs" id="toc-update-cdrs" class="nav-link" data-scroll-target="#update-cdrs">3. Update cdrs</a></li>
   </ul></li>
   <li><a href="#key-features" id="toc-key-features" class="nav-link" data-scroll-target="#key-features">Key Features</a>
   <ul class="collapse">
@@ -193,13 +193,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>The {cdrs} package for R is intended to make your analysis of the DRS data cleaner and more reproducible. Below, we discuss some of the key functions in this package. Visit the github repository <a href="https://github.com/ktomari/cdrs?tab=readme-ov-file#cdrs-">here</a>.</p>
+<p>The {cdrs} package for R is intended to make your analysis of the DRS data easier and more reproducible. Below, we discuss how to install it, and describe some of the key functions of this package. Visit the github repository <a href="https://github.com/ktomari/cdrs?tab=readme-ov-file#cdrs-">here</a>.</p>
 </section>
 <section id="installing-and-updating" class="level2">
 <h2 class="anchored" data-anchor-id="installing-and-updating">Installing and Updating</h2>
-<p>This package is not yet available on the official package repository of CRAN. As such, you will need to install it manually using a function from the package {devtools}. The {devtools} package helps R programmers do several tasks, but in our case it is used to install a package from GitHub.</p>
-<section id="set-up" class="level3">
-<h3 class="anchored" data-anchor-id="set-up">1. Set up</h3>
+<p>This package is not yet available on the official package repository of CRAN. As such, you will need to install it manually using a function from the package {devtools}. The {devtools} package helps R programmers do several tasks such write R packages, but in our case it is used to install a package from GitHub.</p>
+<section id="set-up-devtools" class="level3">
+<h3 class="anchored" data-anchor-id="set-up-devtools">1. Set up devtools</h3>
 <p>First, make sure you have {devtools} installed. You can run this script to see if you have it installed on your machine, if it not it will download and install it from CRAN.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"devtools"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
@@ -210,8 +210,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="install" class="level3">
-<h3 class="anchored" data-anchor-id="install">2. Install</h3>
+<section id="install-cdrs" class="level3">
+<h3 class="anchored" data-anchor-id="install-cdrs">2. Install cdrs</h3>
 <p>Second, install {cdrs} from GitHub.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"ktomari/cdrs"</span>)</span>
@@ -220,8 +220,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cdrs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="updates" class="level3">
-<h3 class="anchored" data-anchor-id="updates">3. Updates</h3>
+<section id="update-cdrs" class="level3">
+<h3 class="anchored" data-anchor-id="update-cdrs">3. Update cdrs</h3>
 <p>As of this writing, the package {cdrs} is actively being updated. Since it is not currently available on CRAN, you will have to check for updates manually. You may do so by checking our <a href="https://github.com/ktomari/cdrs/blob/master/NEWS.md">News</a> page to see if there have been updates. When updates are available, simply repeat step 2) <code>devtools::install_github("ktomari/cdrs")</code>.</p>
 </section>
 </section>
@@ -233,21 +233,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>drs_data <span class="ot">&lt;-</span> cdrs<span class="sc">::</span><span class="fu">cdrs_read</span>(<span class="st">"Your/Path/Here"</span>, <span class="at">convert_to_NA =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>If you want to see an example of this in action, use <code>cdrs_read_example()</code></p>
+<p>If you want to see an example of this in action without downloading the public data set, use <code>cdrs_read_example()</code></p>
 </section>
 <section id="drs-with-survey" class="level3">
 <h3 class="anchored" data-anchor-id="drs-with-survey">DRS with {survey}</h3>
-<p>We rely on the {survey} package for much of the backend calculations of the DRS survey. This package is critical because it allows us to make proper estimations given the unique set of statistics necessary to analyze social survey data. You can learn more about how we approach survey statistics in our <a href="documentation.html">documentation</a>.</p>
-<p>The first step requires us to create a “survey design object” which specifies the complex sampling design that the DRS uses. We provide the conceptual details of how we specify this object in the <a href="doc_weights.html">weights</a> page, whereas below, we demonstrate its implementation with {cdrs}.</p>
+<p>We rely on the {survey} package for much of the backend calculations of the DRS survey. This package is critical because it allows us to make proper estimations given the unique set of statistics necessary to analyze social survey data. You can learn more about how we approach survey statistics in our <a href="documentation.html#survey-methods">documentation</a>.</p>
+<p>The first step requires us to create a data subset, followed by a “survey design object” which specifies the complex sampling design that the DRS uses. We provide the conceptual details of how we specify this object in the <a href="doc_weights.html">Weights and Complex Survey Design</a> page, whereas below, we simply demonstrate its implementation with {cdrs}.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First we create a data subset of the variables we're interest in.</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The cdrs_subset() function subsets the variables of interest,</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># as well as the Zone and WTFINAL columns which we'll need later.</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>drs_subset <span class="ot">&lt;-</span> cdrs<span class="sc">::</span><span class="fu">cdrs_subset</span>(drs_data, <span class="st">"Q2"</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Second, we create the survey design object, which can later be used with</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># {survey} functions like svytable.</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>svydes_obj <span class="ot">&lt;-</span> cdrs<span class="sc">::</span><span class="fu">cdrs_design</span>(drs_subset, <span class="at">set_fpc =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Note, you may pass column names either as a vector of quoted column names, or</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># as unquoted column names, as show below.</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>drs_subset <span class="ot">&lt;-</span> cdrs<span class="sc">::</span><span class="fu">cdrs_subset</span>(drs_data, Q2)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Second, we create the survey design object, which can later be used with</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># {survey} functions like svytable.</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>svydes_obj <span class="ot">&lt;-</span> cdrs<span class="sc">::</span><span class="fu">cdrs_design</span>(drs_subset, <span class="at">set_fpc =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Given this, we can reproduce the first example in the <a href="doc_weights.html">Weights and Complex Survey Design</a> page.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>prop <span class="ot">&lt;-</span> survey<span class="sc">::</span><span class="fu">svymean</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># x is the formula</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="sc">~</span> Q2,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">design =</span> svydes_obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
