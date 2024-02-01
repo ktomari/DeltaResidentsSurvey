@@ -193,14 +193,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>The {cdrs} package for R is intended to make your analysis of the DRS data easier and more reproducible. Below, we discuss how to install it, and describe some of the key functions of this package. Visit the github repository <a href="https://github.com/ktomari/cdrs?tab=readme-ov-file#cdrs-">here</a>.</p>
+<p>The {cdrs} (pronounced “cedars”) package for R is intended to make your analysis of the DRS data easier and more reproducible. Below, we discuss how to install it, and describe some of the key functions of this package. To examine the source code, go to the github repository <a href="https://github.com/ktomari/cdrs?tab=readme-ov-file#cdrs-">here</a>.</p>
 </section>
 <section id="installing-and-updating" class="level2">
 <h2 class="anchored" data-anchor-id="installing-and-updating">Installing and Updating</h2>
-<p>This package is not yet available on the official package repository of CRAN. As such, you will need to install it manually using a function from the package {devtools}. The {devtools} package helps R programmers do several tasks such write R packages, but in our case it is used to install a package from GitHub.</p>
+<p>This package is not yet available on the official package repository of CRAN. As such, you will need to install it manually using a function from the package {devtools}. The {devtools} package helps R programmers do several tasks such as write R packages, but in this case, it is used to install the {cdrs} package from GitHub.</p>
 <section id="set-up-devtools" class="level3">
 <h3 class="anchored" data-anchor-id="set-up-devtools">1. Set up devtools</h3>
-<p>First, make sure you have {devtools} installed. You can run this script to see if you have it installed on your machine, if it not it will download and install it from CRAN.</p>
+<p>First, make sure you have {devtools} installed. You can run this script to see if you have it installed on your machine, if it not it will download and install it from CRAN. If you know you don’t have it, just run <code>install.packages("devtools")</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"devtools"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span>
@@ -222,14 +222,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="update-cdrs" class="level3">
 <h3 class="anchored" data-anchor-id="update-cdrs">3. Update cdrs</h3>
-<p>As of this writing, the package {cdrs} is actively being updated. Since it is not currently available on CRAN, you will have to check for updates manually. You may do so by checking our <a href="https://github.com/ktomari/cdrs/blob/master/NEWS.md">News</a> page to see if there have been updates. When updates are available, simply repeat step 2) <code>devtools::install_github("ktomari/cdrs")</code>.</p>
+<p>As of this writing, the package {cdrs} is actively being updated. Since it is not currently available on CRAN, you will have to check for updates manually. You may do so by checking our <a href="https://github.com/ktomari/cdrs/blob/master/NEWS.md">News</a> page to see if there have been updates. When updates are available, simply repeat step 2) <code>devtools::install_github("ktomari/cdrs")</code>. This will download it again from GitHub.</p>
 </section>
 </section>
 <section id="key-features" class="level2">
 <h2 class="anchored" data-anchor-id="key-features">Key Features</h2>
 <section id="reading-drs-data" class="level3">
 <h3 class="anchored" data-anchor-id="reading-drs-data">Reading DRS Data</h3>
-<p>You can read the data in with <code>cdrs_read()</code> which has two arguments: the path to the zip or directory which contains the DRS data, and whether or not to convert <code>&lt;Missing&gt;</code> values into <code>NA</code>.</p>
+<p>You can read the DRS data in with <code>cdrs_read()</code> which has two arguments: the path to the zip file or directory which contains the DRS data, and whether or not to convert <code>&lt;Missing&gt;</code> values into <code>NA</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>drs_data <span class="ot">&lt;-</span> cdrs<span class="sc">::</span><span class="fu">cdrs_read</span>(<span class="st">"Your/Path/Here"</span>, <span class="at">convert_to_NA =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -237,8 +237,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="drs-with-survey" class="level3">
 <h3 class="anchored" data-anchor-id="drs-with-survey">DRS with {survey}</h3>
-<p>We rely on the {survey} package for much of the backend calculations of the DRS survey. This package is critical because it allows us to make proper estimations given the unique set of statistics necessary to analyze social survey data. You can learn more about how we approach survey statistics in our <a href="documentation.html#survey-methods">documentation</a>.</p>
-<p>The first step requires us to create a data subset, followed by a “survey design object” which specifies the complex sampling design that the DRS uses. We provide the conceptual details of how we specify this object in the <a href="doc_weights.html">Weights and Complex Survey Design</a> page, whereas below, we simply demonstrate its implementation with {cdrs}.</p>
+<p>We rely on the {survey} package for much of the backend calculations of the DRS survey. This package is critical because it allows us to make proper estimations given the unique characteristics of survey statistics. You can learn more about how we approach survey statistics in our <a href="documentation.html#survey-methods">documentation</a>.</p>
+<p>The first step requires us to create a data subset, followed by a “survey design object” which specifies the complex survey design that the DRS uses. We provide the conceptual details of how we specify this object in the <a href="doc_weights.html">Weights and Complex Survey Design</a> page, whereas below, we simply demonstrate its implementation with {cdrs}.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First we create a data subset of the variables we're interest in.</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The cdrs_subset() function subsets the variables of interest,</span></span>
@@ -251,7 +251,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># {survey} functions like svytable.</span></span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>svydes_obj <span class="ot">&lt;-</span> cdrs<span class="sc">::</span><span class="fu">cdrs_design</span>(drs_subset, <span class="at">set_fpc =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Given this, we can reproduce the first example in the <a href="doc_weights.html">Weights and Complex Survey Design</a> page.</p>
+<p>Given this, we can reproduce the first example in the <a href="doc_weights.html">Weights and Complex Survey Design</a> page. This calculated the weighted proportions of <code>Q2</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>prop <span class="ot">&lt;-</span> survey<span class="sc">::</span><span class="fu">svymean</span>(</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># x is the formula</span></span>
