@@ -236,7 +236,7 @@ window.Quarto = {
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>In this chapter we will explore the importance and role of survey weights in the Delta Residents Survey (DRS), as well as a broader discussion on complex sampling design. In general, quantitative inferential survey analysis involves a special branch of statistics that accounts for the unique qualities and assumptions of survey methodologies. Be advised that a proper statistical analysis cannot be conducted without the consideration of the complex sampling design of our survey.</p>
+<p>In this chapter we will explore the importance and role of survey weights in the Delta Residents Survey (DRS), as well as a broader discussion on complex survey design. In general, quantitative inferential survey analysis involves a special branch of statistics that accounts for the unique qualities and assumptions of survey methodologies. Be advised that a proper statistical analysis cannot be conducted without the consideration of our complex survey design.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -247,7 +247,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Please note that this document is in draft form! Some of the technical notes and citations have yet to be reviewed. Although the author of this chapter is trained in statistics, the author is not a subject matter expert in the field of statistics. The guidance and information provided below should be considered provisional.</p>
+<p>Please note that this document is in draft form! Some of the technical notes and citations have yet to be reviewed. Although this chapter was prepared by someone who is trained in statistics, the author is not a subject matter expert in the field of statistics. The guidance and information provided below should be considered provisional.</p>
 </div>
 </div>
 </section>
@@ -343,7 +343,7 @@ Formulas
 </div>
 </div>
 </div>
-<p>Here is another example of calculating weighted frequencies. Maybe this time you want to see the breakdown of the variable <code>Q2</code> by <code>Zone</code>? To accomplish this, we can use <code>svytable()</code>.</p>
+<p>Here is another example, this time calculating weighted frequencies with a breakdown of the variable <code>Q2</code> by <code>Zone</code>. To accomplish this, we can use <code>svytable()</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>freq <span class="ot">&lt;-</span> survey<span class="sc">::</span><span class="fu">svytable</span>(</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Note, `x` is now `formula`,</span></span>
