@@ -6,7 +6,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Kenji Tomari">
 
 <title>Delta Residents Survey - Types of Missing Data and Ordinal Variables</title>
 <style>
@@ -4694,17 +4693,11 @@ vertical-align: -.125em;
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Kenji Tomari </p>
-          </div>
-  </div>
     
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">Last Updated on December, 2023</p>
+      <p class="date">Last Updated on February, 2024</p>
     </div>
   </div>
   
@@ -4786,7 +4779,7 @@ vertical-align: -.125em;
 <section id="conclusion" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">4</span> Conclusion</h2>
 <p>The DRS survey data was rendered as a CSV file with a separate metadata xlsx file to convey the complex structure of the data, including the order of factors and the various types of missing data.</p>
-<p>As a parting note, please utilize the <a href="https://ktomari.github.io/DeltaResidentsSurvey/doc_drs_functions.html">core function</a>, <code>drs_read()</code> as it produces a properly structured data set. This function has an argument that allows you to either see all the various types of missing data (ie. anything encoded with angle brackets <code>&lt;...&gt;</code>), or to convert these all to the special R value <code>NA</code>. This latter conversion is desirable when running an analysis or rendering plots where the <em>types</em> of missing data are not of concern. In such cases, analytical and plotting functions like <code>survey::svydesign()</code> or <code>ggplot2::ggplot()</code> can uniformly interpret these values as “non-responses”.</p>
+<p>As a parting note, please utilize the {cdrs} package’s <code>cdrs_read()</code> as it produces a properly structured data set. This function has an argument that allows you to either see all the various types of missing data (ie. anything encoded with angle brackets <code>&lt;...&gt;</code>), or to convert these all to the special R value <code>NA</code>. This latter conversion is desirable when running an analysis or rendering plots where the <em>types</em> of missing data are not of concern. In such cases, analytical and plotting functions like <code>survey::svydesign()</code> or <code>ggplot2::ggplot()</code> can uniformly interpret these values as “non-responses”.</p>
 
 
 </section>
