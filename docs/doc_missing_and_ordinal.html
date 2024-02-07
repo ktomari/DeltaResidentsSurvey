@@ -4670,14 +4670,18 @@ vertical-align: -.125em;
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#history-of-drs-data" id="toc-history-of-drs-data" class="nav-link active" data-scroll-target="#history-of-drs-data"><span class="header-section-number">1</span> History of DRS Data</a></li>
-  <li><a href="#final-data-format" id="toc-final-data-format" class="nav-link" data-scroll-target="#final-data-format"><span class="header-section-number">2</span> Final Data Format</a>
+  <li><a href="#automated-data-schema-handling" id="toc-automated-data-schema-handling" class="nav-link active" data-scroll-target="#automated-data-schema-handling"><span class="header-section-number">1</span> Automated Data Schema Handling</a></li>
+  <li><a href="#history-of-drs-data" id="toc-history-of-drs-data" class="nav-link" data-scroll-target="#history-of-drs-data"><span class="header-section-number">2</span> History of DRS Data</a></li>
+  <li><a href="#final-data-format" id="toc-final-data-format" class="nav-link" data-scroll-target="#final-data-format"><span class="header-section-number">3</span> Final Data Format</a>
   <ul>
-  <li><a href="#ordinal-variables" id="toc-ordinal-variables" class="nav-link" data-scroll-target="#ordinal-variables"><span class="header-section-number">2.1</span> Ordinal Variables</a></li>
-  <li><a href="#missing-data" id="toc-missing-data" class="nav-link" data-scroll-target="#missing-data"><span class="header-section-number">2.2</span> Missing Data</a></li>
+  <li><a href="#ordinal-variables" id="toc-ordinal-variables" class="nav-link" data-scroll-target="#ordinal-variables"><span class="header-section-number">3.1</span> Ordinal Variables</a></li>
+  <li><a href="#missing-data" id="toc-missing-data" class="nav-link" data-scroll-target="#missing-data"><span class="header-section-number">3.2</span> Missing Data</a></li>
   </ul></li>
-  <li><a href="#the-schema-of-the-drs-data-product" id="toc-the-schema-of-the-drs-data-product" class="nav-link" data-scroll-target="#the-schema-of-the-drs-data-product"><span class="header-section-number">3</span> The Schema of the DRS Data Product</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">4</span> Conclusion</a></li>
+  <li><a href="#the-schema-of-the-drs-data-product" id="toc-the-schema-of-the-drs-data-product" class="nav-link" data-scroll-target="#the-schema-of-the-drs-data-product"><span class="header-section-number">4</span> The Schema of the DRS Data Product</a>
+  <ul>
+  <li><a href="#missingness" id="toc-missingness" class="nav-link" data-scroll-target="#missingness"><span class="header-section-number">4.1</span> Missingness</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">5</span> Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -4710,76 +4714,159 @@ vertical-align: -.125em;
 
 
 <p>In this chapter, we review the types of missing data and ordered (or ordinal) variables present in the Delta Residents Survey (DRS) data set. As this documentation is intended to serve all different versions of the DRS data set, you may find some descriptions that do not apply to the version of the data set to which you have access. Irrespective, this chapter should satisfy questions about whichever data set you have.</p>
-<section id="history-of-drs-data" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="history-of-drs-data"><span class="header-section-number">1</span> History of DRS Data</h2>
+<section id="automated-data-schema-handling" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="automated-data-schema-handling"><span class="header-section-number">1</span> Automated Data Schema Handling</h2>
+<p>Before exploring the complexities of the DRS data and the data product, the reader should be aware that the <a href="https://github.com/ktomari/cdrs">{cdrs}</a> package facilitates the task of wrangling our complex data schema in a simpler manner. The data analyst need only be aware of the <em>kinds</em> of values present in the DRS data. By default, <code>cdrs_read()</code> allows you to load the DRS data into R without having to devise an algorithm yourself. This function corrects ordinal categorical factors and converts most missing values to <code>NA</code>. Only values that express uncertainty, eg. “I don’t know”, are left untouched. The intent of the default setting of <code>cdrs_read()</code> is to ease the application of {survey} package functions (eg. <code>survey::svymean</code>) that estimate some population statistic. The bulk of the heavy lifting is done by the function <code>cdrs_revise()</code>. We recommend you read the documentation for both functions<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> and the following sections so that you may manually alter parameters as needed.</p>
+</section>
+<section id="history-of-drs-data" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="history-of-drs-data"><span class="header-section-number">2</span> History of DRS Data</h2>
 <p>The DRS involved a large team of collaborators, advisers, and contractors. The implementation of the survey was done through the Qualtrics web service, while the de-identification and weighting of the data was performed by the team at the Institute for Social Research (ISR) at the California State University, Sacramento, with the involvement of their sub-contractor Marketing Systems Group (MSG). As such, the original data collection, and a portion of the data preparation was completed before the authors of this chapter had access to the data set. Although it is not strictly accurate to describe the product of ISR’s work as “raw data,” this is how we’ll address it for the remainder of this chapter.</p>
 <p>The raw data was provided to us in the SPSS <code>.sav</code> format. As non-SPSS users, the core DRS team has little familiarity with the intricacies of this data format. We found that the sav format consists of a unique approach for conveying metadata that is moderately challenging to access in the programming language we use, R. The R language does not have a innate capacity to handle sav formats, and as such we used the {haven} package. While both R {haven} and the SPSS .sav format are sufficiently documented, we considered that the sav data format might pose a barrier to researchers interested in the DRS data set as it requires a basic understanding of <a href="https://adv-r.hadley.nz/oo.html">object-oriented programming systems</a>. In order to reduce this burden, we chose to supply the data in a simpler form (as a CSV), and provide the R package {cdrs} that does the heavy lifting with regard to accessing the advanced features of sav data.</p>
 <p>The primary concern with the sav format and its manipulation in R is the manner in which certain metadata are embedded directly into each column of the table of data. For instance, an ordinal, diverging- or likert-scale variable, with values that range from <code>&quot;Very Satisfied&quot;</code> to <code>&quot;Very Disatisfied&quot;</code>, has an inherent structure that affects the way the data are processed. Since the order matters, each “label” (eg. <code>&quot;Satisfied&quot;</code>) is coupled with a numeric encoding (eg. <code>2</code>). Additionally, Qualtrics provides nuanced information regarding how survey respondents choose not to respond. This matter is discussed at length in the next section. In summary, the raw data format, sav, includes a complex data structure that incorporates both <em>order</em> and alternative approaches to conveying <em>missing data</em> that poses a challenge to casual R users.</p>
 </section>
-<section id="final-data-format" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="final-data-format"><span class="header-section-number">2</span> Final Data Format</h2>
+<section id="final-data-format" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="final-data-format"><span class="header-section-number">3</span> Final Data Format</h2>
 <p>The final data product that the DRS team provides primarily consists of a Comma-Separated Values file, or CSV. These files are known as “flat files”, meaning they are simple text files that rely on a combination of commas and new lines to convey a tabular data structure. In simpler terms, CSV files can be opened in any basic text editor because it is written as plain text. The pitfall with CSV files is that they do not convey any information on the attributes of columns present in the table. While R’s <code>read.csv()</code> or <code>readr::read_csv()</code> have options for classifying a column by the base data types in the language, eg. the R class “character” or “factor”, the CSV format itself does not incorporate this information directly. This leaves some algorithm (ie. function) to do the guesswork of determining which R class is appropriate, or the user to define it manually. These issues are further discussed in the following two sections.</p>
-<section id="ordinal-variables" class="level3" data-number="2.1">
-<h3 data-number="2.1" class="anchored" data-anchor-id="ordinal-variables"><span class="header-section-number">2.1</span> Ordinal Variables</h3>
+<section id="ordinal-variables" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="ordinal-variables"><span class="header-section-number">3.1</span> Ordinal Variables</h3>
 <p>In the case where one reads a CSV file and applies the class “factor” to a column, it correctly converts the column into a categorical variable. However, such a process haphazardly applies an order that is based purely on the sequence by which the algorithm first encounters each category. For instance, the command <code>factor(c(&quot;Satisfactory&quot;, &quot;Unsure&quot;, &quot;Very Satisfactory&quot;))</code> yields a factor (or categorical) variable in R, but the “levels” are assigned in the order they were inscribed. In this case, the first category is <code>&quot;Satisfactory&quot;</code>, even though it should be <code>&quot;Very Satisfactory&quot;</code>. This classification also fails to specify levels (or categories), like <code>&quot;Unsatisfactory&quot;</code>, that are absent in the initial <code>factor()</code> command execution. While we can manually adjust all of these issues, the important point is that these matters are not addressed directly by the CSV format.</p>
 </section>
-<section id="missing-data" class="level3" data-number="2.2">
-<h3 data-number="2.2" class="anchored" data-anchor-id="missing-data"><span class="header-section-number">2.2</span> Missing Data</h3>
-<p>Qualtrics has the ability to convey missing data according to the way its absence is recorded by the web service. These include matters like, “Did the respondent see the question, but then decline to answer it?” Or, “Did the respondent not see the question?” These different types of missing data (or as described in other DRS documents as “missingness”) are embedded into the structure of the raw sav data in a way which cannot be reproduced by a CSV file. In the following section we discuss both the way in which the DRS team accommodated issues around order and missingness, and we provide a list of all the different types of missing data.</p>
+<section id="missing-data" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="missing-data"><span class="header-section-number">3.2</span> Missing Data</h3>
+<p>Qualtrics has the ability to convey missing data according to the way its absence is recorded by the web service. These include matters like, “Did the respondent see the question, but then decline to answer it?” Or, “Did the respondent not see the question?” These different types of missing data (or as described in other DRS documents as “missingness”) are embedded into the structure of the raw sav data in a way which cannot be reproduced by a CSV file. In the following sections we discuss both the way in which the DRS team accommodated issues around order and missingness, and we provide a list of all the different types of missing data.</p>
 </section>
 </section>
-<section id="the-schema-of-the-drs-data-product" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="the-schema-of-the-drs-data-product"><span class="header-section-number">3</span> The Schema of the DRS Data Product</h2>
+<section id="the-schema-of-the-drs-data-product" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="the-schema-of-the-drs-data-product"><span class="header-section-number">4</span> The Schema of the DRS Data Product</h2>
 <p>The final data output of the DRS project is a combination of three files:</p>
 <ol type="1">
 <li><p>A metadata file written as a Microsoft xlsx file.</p></li>
 <li><p>A CSV data file.</p></li>
 <li><p>A hash value stored in a txt file.</p></li>
 </ol>
-<p>The purpose of the hash file is not discussed at length in this chapter, but a brief description is provided as a footnote <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. As discussed previously, the CSV file consists of the bulk of the recorded survey data, however the structure of this data is stored in the xlsx file. The xlsx, or metadata, contains information on each column/variable in the CSV file. Each variable in the metadata includes, wherever appropriate, the order and factors of the variable. As a means to reproduce the different types of missing data as recorded by Qualtrics, we provide different categories/factors for variables that have this information. The table below describes each possible missing value.</p>
-<table class="table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>R Value</th>
-<th>Meaning</th>
+<p>The purpose of the hash file is not discussed at length in this chapter, but a brief description is provided as a footnote <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. As discussed previously, the CSV file consists of the bulk of the recorded survey data, however the structure of this data is stored in the xlsx file. The xlsx, or metadata, contains information on each column/variable in the CSV file. Each variable in the metadata includes, wherever appropriate, the order and factors of the variable. As a means to reproduce the different types of missing data as recorded by Qualtrics, we provide different categories/factors for variables that have this information.</p>
+<section id="missingness" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="missingness"><span class="header-section-number">4.1</span> Missingness</h3>
+<p>Broadly speaking, we need account for the four categories by which missing values appear in the DRS data. We provide a table below that explores each category and their various permutations. It should be noted that the column “R Value” represents the way the missing data would appear in the comma separated values (csv) file, or in R once it was read using <code>read.csv</code>. The column labeled “Algorithm” below describes the way in which the <code>cdrs::cdrs_revise()</code> function handles each “R Value”.</p>
+<style>
+
+table {
+border-collapse: collapse;
+width: 100%;
+}
+
+th, td {
+border: 1px solid black;
+padding: 8px;
+}
+</style>
+<table>
+<tbody><tr>
+<th>
+Category
+</th>
+<th>
+R Value
+</th>
+<th>
+Description
+</th>
+<th>
+Algorithm
+</th>
 </tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>NA</code></td>
-<td>Known as “system missing” these values indicate survey respondents <em>never</em> read the question, or stated differently, were never shown the question. Typically, this means the respondents ended the survey without completing it.</td>
+<tr>
+<td>
+System Missing
+</td>
+<td>
+<code>NA</code>
+</td>
+<td>
+These values indicate survey respondents never read the question. Or stated differently, respondents were never shown the question. Typically, this means the respondents ended the survey without completing it.
+</td>
+<td>
+As is. (This is why we must always utilize the parameter <code>na.rm = T</code> when using functions from the {survey} package.)
+</td>
 </tr>
-<tr class="even">
-<td><code>&lt;Decline to answer&gt;</code></td>
-<td>Originally, this value was recorded as <code>99</code> in the raw data. It means, respondents read the question, but declined to select a response, or enter anything in text entry field.</td>
+<tr>
+<td rowspan="2">
+Refused
+</td>
+<td>
+<code>&lt;Decline to answer&gt;</code>
+</td>
+<td>
+Originally, this value was recorded as <code>99</code> in the raw data. It means, respondents read the question, but declined to select or enter a response, or a button to “Decline to answer” was selected.
+</td>
+<td>
+By specifying <code>preserve_refused = F</code>, <code>&lt;Decline to answer&gt;</code> in categorical columns are converted to <code>NA</code>. By specifying <code>preserve_factor_numeric = F</code>, these values are converted to <code>NA</code> for numeric entry fields.
+</td>
 </tr>
-<tr class="odd">
-<td><code>&lt;Not Applicable&gt;</code></td>
-<td>Originally, this value was recorded as <code>98</code> in the raw data. It typically means the respondent decided to end the survey on Question 39, which asks if the respondent would like to answer supplemental questions. However, in certain circumstances (ie. in questions preceding Q39), this can mean the respondent entered “NA”.</td>
+<tr>
+<td>
+<code>&lt;Not applicable&gt;</code>
+</td>
+<td>
+Originally, this value was recorded as <code>98</code> in the raw data. It typically means the respondent decided to end the survey on Question 39, which asks if the respondent would like to answer supplemental questions. However, in one case, Q1a, this can mean the respondent entered “NA”.
+</td>
+<td>
+By specifying <code>preserve_refused = F</code>, <code>&lt;Not applicable&gt;</code> in categorical columns are converted to <code>NA</code>. By specifying <code>preserve_factor_numeric = F</code>, these values are converted to <code>NA</code> for the numeric entry field Q1a.
+</td>
 </tr>
-<tr class="even">
-<td><code>&lt;I don&#39;t know&gt;</code></td>
-<td>Originally, this value was recorded as <code>97</code>, with varying textual descriptions, such as <code>&quot;I&#39;m not sure&quot;</code> in the raw data. These values were selected from a list of options for a question the survey. In other words, it was a choice in a multiple-choice question. Unlike the previous missing values, this one was intentionally selected by the respondent.</td>
+<tr>
+<td rowspan="3">
+Uncertainty
+</td>
+<td>
+<code>&lt;I don&#39;t know&gt;</code>
+</td>
+<td rowspan="3">
+Originally, this value was recorded as <code>97</code>, with varying textual descriptions in the raw data. These values were selected from a list of options for a question on the survey. In other words, it was a choice in a multiple-choice question. Unlike in some instances in the previous missing values, this one was intentionally selected by the respondent.
+</td>
+<td rowspan="3">
+By specifying <code>preserve_uncertainty = F</code>, these values are converted to <code>NA</code>.
+</td>
 </tr>
-<tr class="odd">
-<td><code>&lt;Missing&gt;</code></td>
-<td>This value was recorded as <code>&quot;Missing&quot;</code> in a variable that was created by ISR or MSG. These variables are demographic variables that simplified responses to a question in the survey to either reduce identifiability or transcribe the survey responses in a way that matches census or marketing data for the purpose of constructing survey weights. In either case, <code>&lt;Missing&gt;</code> merely represents a value that was either dropped or was never provided by a respondent.</td>
+<tr>
+<td>
+<code>&lt;I Dont know why the Delta is important&gt;</code>
+</td>
 </tr>
-<tr class="even">
-<td><code>&lt;Erased&gt;</code></td>
-<td>This value was created by the current authors, ie. the part of the team that generated the CSV data sets. It represents a category that was removed from the survey data to reduce identifiability.</td>
+<tr>
+<td>
+<code>&lt;Unsure&gt;</code>
+</td>
 </tr>
-</tbody>
-</table>
+<tr>
+<td rowspan="2">
+Editorial Omission
+</td>
+<td>
+<code>&lt;Missing&gt;</code>
+</td>
+<td>
+These values did not exist in any form on the Qualtrics survey. Rather, in the processing of building variables that align with census or marketing data, eg. converting the question on gender to a gender binary, missing values or identifiable segments were recorded as <code>99</code> in the raw data.
+</td>
+<td rowspan="2">
+By specifying <code>preserve_editorials = F</code>, these values are converted to <code>NA</code>.
+</td>
+</tr>
+<tr>
+<td>
+<code>&lt;Erased&gt;</code>
+</td>
+<td>
+This value was added in the process of creating the public data set to reduce identifiability for the <code>geoid.county</code> column.
+</td>
+</tr>
+</tbody></table>
 </section>
-<section id="conclusion" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">4</span> Conclusion</h2>
+</section>
+<section id="conclusion" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">5</span> Conclusion</h2>
 <p>The DRS survey data was rendered as a CSV file with a separate metadata xlsx file to convey the complex structure of the data, including the order of factors and the various types of missing data.</p>
-<p>As a parting note, please utilize the {cdrs} package’s <code>cdrs_read()</code> as it produces a properly structured data set. This function has an argument that allows you to either see all the various types of missing data (ie. anything encoded with angle brackets <code>&lt;...&gt;</code>), or to convert these all to the special R value <code>NA</code>. This latter conversion is desirable when running an analysis or rendering plots where the <em>types</em> of missing data are not of concern. In such cases, analytical and plotting functions like <code>survey::svydesign()</code> or <code>ggplot2::ggplot()</code> can uniformly interpret these values as “non-responses”.</p>
+<p>As a parting note, please utilize the {cdrs} package’s <code>cdrs_read()</code> as it produces a properly structured data set and it reduces the burden when sharing reproducible code.</p>
 
 
 </section>
@@ -4788,7 +4875,8 @@ vertical-align: -.125em;
 <div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p>The hash value stored in this txt file was produced by running a SHA-256 bit <a href="https://en.wikipedia.org/wiki/Cryptographic_hash_function">cryptographic algorithm</a>, using <code>digest::digest()</code>, on the CSV file when it was initially created. In simpler terms, this hash value provides a way to confirm that the original data file has not been altered in transit from the computer that generated the csv file (ie. the author’s computer) to the end user’s computer. Due to the nature of electronic storage, <a href="https://en.wikipedia.org/wiki/Data_corruption">data can become corrupted</a>, either in the process of transmitting the data over the internet, reading or writing it, or as the hardware itself is exposed to cosmic radiation that alters the circuitry. By applying a cryptographic or hash function on a file, we are able to provide a brief description of the content in a succinct form: a 64-character series of numbers and letters. Should an error in the data occur, the cryptographic hash function applied to this error-ridden data set would most likely yield a different hash value. While there is a possibility that two files will share the same hash value, this is highly, highly improbable. As such, this is a simple and quick way to confirm that you have a good copy of the DRS data set.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Run <code>?cdrs::cdrs_revise</code> and <code>?cdrs::cdrs_read</code> after you’ve installed the {cdrs} package.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>The hash value stored in this txt file was produced by running a SHA-256 bit <a href="https://en.wikipedia.org/wiki/Cryptographic_hash_function">cryptographic algorithm</a>, using <code>digest::digest()</code>, on the CSV file when it was initially created. In simpler terms, this hash value provides a way to confirm that the original data file has not been altered in transit from the computer that generated the csv file (ie. the author’s computer) to the end user’s computer. Due to the nature of electronic storage, <a href="https://en.wikipedia.org/wiki/Data_corruption">data can become corrupted</a>, either in the process of transmitting the data over the internet, reading or writing it, or as the hardware itself is exposed to cosmic radiation that alters the circuitry. By applying a cryptographic or hash function on a file, we are able to provide a brief description of the content in a succinct form: a 64-character series of numbers and letters. Should an error in the data occur, the cryptographic hash function applied to this error-ridden data set would most likely yield a different hash value. While there is a possibility that two files will share the same hash value, this is highly, highly improbable. As such, this is a simple and quick way to confirm that you have a good copy of the DRS data set.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
