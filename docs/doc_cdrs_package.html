@@ -4785,9 +4785,9 @@ vertical-align: -.125em;
 <h2 data-number="3" class="anchored" data-anchor-id="key-features"><span class="header-section-number">3</span> Key Features</h2>
 <section id="reading-drs-data" class="level3" data-number="3.1">
 <h3 data-number="3.1" class="anchored" data-anchor-id="reading-drs-data"><span class="header-section-number">3.1</span> Reading DRS Data</h3>
-<p>You can read the DRS data in with <code>cdrs_read()</code> which has two arguments: the path to the zip file or directory which contains the DRS data, and whether or not to convert <code>&lt;Missing&gt;</code> values into <code>NA</code>.</p>
+<p>You can read the DRS data in with <code>cdrs_read()</code> which has two arguments: the path to the zip file or directory which contains the DRS data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>drs_data <span class="ot">&lt;-</span> cdrs<span class="sc">::</span><span class="fu">cdrs_read</span>(<span class="st">&quot;Your/Path/Here&quot;</span>, <span class="at">convert_to_NA =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>drs_data <span class="ot">&lt;-</span> cdrs<span class="sc">::</span><span class="fu">cdrs_read</span>(<span class="st">&quot;Your/Path/Here&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>If you want to see an example of this in action without downloading the public data set, use <code>cdrs_read_example()</code></p>
 </section>
@@ -4812,7 +4812,8 @@ vertical-align: -.125em;
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>prop <span class="ot">&lt;-</span> survey<span class="sc">::</span><span class="fu">svymean</span>(</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># x is the formula</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="sc">~</span> Q2,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">design =</span> svydes_obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">design =</span> svydes_obj,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.rm =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 

@@ -4958,10 +4958,8 @@ Note
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Q2, Zone, WTFINAL) <span class="sc">%&gt;%</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Remove NA values in the weight column</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(WTFINAL)) <span class="sc">%&gt;%</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Remove missing values in the variable column(s)</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Q2)) <span class="sc">%&gt;%</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Drop factors that are unused.</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Q2 =</span> <span class="fu">fct_drop</span>(<span class="fu">as_factor</span>(Q2)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Drop factors that are unused.</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Q2 =</span> <span class="fu">fct_drop</span>(<span class="fu">as_factor</span>(Q2)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Second, we stipulate the “survey design” which describes the design of our complex survey in a format that statistical functions from the {survey} package can utilize. Here, we will explain our reasoning for how we defined each parameter in <code>survey::svydesign()</code>. For more details, please see the <a href="https://cran.r-project.org/web/packages/survey/survey.pdf">documentation</a> for this function.</p>
 <ul>
@@ -4990,7 +4988,8 @@ Note
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>prop <span class="ot">&lt;-</span> survey<span class="sc">::</span><span class="fu">svymean</span>(</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># x is the formula</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="sc">~</span> Q2,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">design =</span> designQ2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">design =</span> designQ2,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.rm =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Formulas">
 <div class="callout-header d-flex align-content-center">
@@ -5005,7 +5004,8 @@ Formulas
 <p>For more advanced users, be aware that you can also write the formula in a way that’s more programmatic. For instance, if you stored the name of your variable of interest, <code>Q2</code>, in a vector (eg. <code>var_ &lt;- &quot;Q2&quot;</code>), you could write the formula for <code>svymean</code> (or any other formula-taking function) with <code>as.formula()</code>. In this case, we would specify it like this:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">svymean</span>(<span class="at">x =</span> <span class="fu">as.formula</span>(<span class="fu">paste0</span>(<span class="st">&quot;~&quot;</span>, var_)), </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">design =</span> designQ2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">design =</span> designQ2,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">na.rm =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -5016,7 +5016,8 @@ Formulas
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># and for fun, we specified the formula using `as.formula`.</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Alternatively, we could have supplied `~ Q2 + Zone`</span></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> <span class="fu">as.formula</span>(<span class="fu">paste0</span>(<span class="st">&quot;~&quot;</span>, <span class="st">&quot;Q2&quot;</span>, <span class="st">&quot; + &quot;</span>, <span class="st">&quot;Zone&quot;</span>)), </span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">design =</span> designQ2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">design =</span> designQ2,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.rm =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="sec-package" class="level2" data-number="6">
