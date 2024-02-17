@@ -4714,7 +4714,10 @@ vertical-align: -.125em;
   <li><a href="#key-features" id="toc-key-features" class="nav-link" data-scroll-target="#key-features"><span class="header-section-number">3</span> Key Features</a>
   <ul>
   <li><a href="#reading-drs-data" id="toc-reading-drs-data" class="nav-link" data-scroll-target="#reading-drs-data"><span class="header-section-number">3.1</span> Reading DRS Data</a></li>
-  <li><a href="#drs-with-survey" id="toc-drs-with-survey" class="nav-link" data-scroll-target="#drs-with-survey"><span class="header-section-number">3.2</span> DRS with {survey}</a></li>
+  <li><a href="#drs-with-survey" id="toc-drs-with-survey" class="nav-link" data-scroll-target="#drs-with-survey"><span class="header-section-number">3.2</span> DRS with {survey}</a>
+  <ul class="collapse">
+  <li><a href="#other-survey-wrappers" id="toc-other-survey-wrappers" class="nav-link" data-scroll-target="#other-survey-wrappers"><span class="header-section-number">3.2.1</span> Other {survey} wrappers</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -4754,6 +4757,19 @@ vertical-align: -.125em;
 <section id="installing-and-updating" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="installing-and-updating"><span class="header-section-number">2</span> Installing and Updating</h2>
 <p>This package is not yet available on the official package repository of CRAN. As such, you will need to install it manually using a function from the package {devtools}. The {devtools} package helps R programmers do several tasks such as write R packages, but in this case, it is used to install the {cdrs} package from GitHub.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="tl;dr">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+tl;dr
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you know what you’re doing, run <code>devtools::install_github(&quot;ktomari/cdrs&quot;)</code></p>
+</div>
+</div>
 <section id="set-up-devtools" class="level3" data-number="2.1">
 <h3 data-number="2.1" class="anchored" data-anchor-id="set-up-devtools"><span class="header-section-number">2.1</span> 1. Set up devtools</h3>
 <p>First, make sure you have {devtools} installed. You can run this script to see if you have it installed on your machine, if it not it will download and install it from CRAN. If you know you don’t have it, just run <code>install.packages(&quot;devtools&quot;)</code>.</p>
@@ -4778,36 +4794,40 @@ vertical-align: -.125em;
 </section>
 <section id="update-cdrs" class="level3" data-number="2.3">
 <h3 data-number="2.3" class="anchored" data-anchor-id="update-cdrs"><span class="header-section-number">2.3</span> 3. Update cdrs</h3>
-<p>As of this writing, the package {cdrs} is actively being updated. Since it is not currently available on CRAN, you will have to check for updates manually. You may do so by checking our <a href="https://github.com/ktomari/cdrs/blob/master/NEWS.md">News</a> page to see if there have been updates. When updates are available, simply repeat step 2) <code>devtools::install_github(&quot;ktomari/cdrs&quot;)</code>. This will download it again from GitHub.</p>
+<p>As of this writing, the {cdrs} package is being actively developed. Since it is not currently available on CRAN, you will have to check for updates manually. You may do so by checking our <a href="https://github.com/ktomari/cdrs/blob/master/NEWS.md">News</a> page to see if there have been updates. When updates are available, simply repeat step 2) <code>devtools::install_github(&quot;ktomari/cdrs&quot;)</code>. This will download and install it again from GitHub.</p>
 </section>
 </section>
 <section id="key-features" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="key-features"><span class="header-section-number">3</span> Key Features</h2>
 <section id="reading-drs-data" class="level3" data-number="3.1">
 <h3 data-number="3.1" class="anchored" data-anchor-id="reading-drs-data"><span class="header-section-number">3.1</span> Reading DRS Data</h3>
-<p>You can read the DRS data in with <code>cdrs_read()</code> which has two arguments: the path to the zip file or directory which contains the DRS data.</p>
+<p>You can read the DRS data in with <code>cdrs_read()</code> which has two arguments:</p>
+<ol type="1">
+<li><code>path_</code>: the path to the zip file or directory which contains the DRS data. This function will automatically unzip files as needed and load them into a temporary memory.</li>
+<li><code>relevel_</code>: determines how you want to approach <missingness> values like <code>&quot;&lt;Decline to answer&gt;&quot;</code>. The default setting is <code>&quot;default&quot;</code>—no surprise there! This will convert all missing values to <code>NA</code>, except for those that express uncertainty like <code>&lt;&quot;Unsure&quot;&gt;</code>. You may also specify it as <code>&quot;none&quot;</code>, which will load the DRS data without converting any missing values.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Finally, you may also supply it a list of logical values that match the parameters for <code>cdrs_revise()</code>. This last option is more complicated so we’ll leave a discussion for this in the documentation, ie. <code>?cdrs_read</code>.</missingness></li>
+</ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>drs_data <span class="ot">&lt;-</span> cdrs<span class="sc">::</span><span class="fu">cdrs_read</span>(<span class="st">&quot;Your/Path/Here&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>drs_data <span class="ot">&lt;-</span> cdrs<span class="sc">::</span><span class="fu">cdrs_read</span>(<span class="st">&quot;Your/Path/Here&quot;</span>, </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">relevel_ =</span> <span class="st">&quot;default&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>If you want to see an example of this in action without downloading the public data set, use <code>cdrs_read_example()</code></p>
+<p>If you want to see an example of this in action without downloading the public data set, use <code>cdrs_read_example()</code> instead.</p>
 </section>
 <section id="drs-with-survey" class="level3" data-number="3.2">
 <h3 data-number="3.2" class="anchored" data-anchor-id="drs-with-survey"><span class="header-section-number">3.2</span> DRS with {survey}</h3>
-<p>We rely on the {survey} package for much of the backend calculations of the DRS survey. This package is critical because it allows us to make proper estimations given the unique characteristics of survey statistics. You can learn more about how we approach survey statistics in our <a href="documentation.html#survey-methods">documentation</a>.</p>
+<p>We rely on the {survey} package for much of the backend calculations of the DRS survey. This package is critical because it allows us to make proper estimations given the unique assumptions and characteristics of survey statistics. You can learn more about how we approach survey statistics in our <a href="documentation.html#survey-methods">documentation</a>.</p>
 <p>The first step requires us to create a data subset, followed by a “survey design object” which specifies the complex survey design that the DRS uses. We provide the conceptual details of how we specify this object in the <a href="doc_weights.html">Weights and Complex Survey Design</a> page, whereas below, we simply demonstrate its implementation with {cdrs}.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First we create a data subset of the variables we&#39;re interest in.</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The cdrs_subset() function subsets the variables of interest,</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># as well as the Zone and WTFINAL columns which we&#39;ll need later.</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Note, you may pass column names either as a vector of quoted column names, or</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># as unquoted column names, as show below.</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>drs_subset <span class="ot">&lt;-</span> cdrs<span class="sc">::</span><span class="fu">cdrs_subset</span>(drs_data, Q2)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Second, we create the survey design object, which can later be used with</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># {survey} functions like svytable.</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>svydes_obj <span class="ot">&lt;-</span> cdrs<span class="sc">::</span><span class="fu">cdrs_design</span>(drs_subset, <span class="at">set_fpc =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Note, you must pass a character vector, eg. `&quot;Q2&quot;` or `c(&quot;Q2&quot;, &quot;Q3_1&quot;, ...)`</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>drs_subset <span class="ot">&lt;-</span> cdrs<span class="sc">::</span><span class="fu">cdrs_subset</span>(drs_data, <span class="st">&quot;Q2&quot;</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Second, we create the survey design object, which can later be used with</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># {survey} functions like svytable. The argument `set_fpc` is largely optional as we found no real difference with robustness tests.</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>svydes_obj <span class="ot">&lt;-</span> cdrs<span class="sc">::</span><span class="fu">cdrs_design</span>(drs_subset, <span class="at">set_fpc =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Given this, we can reproduce the first example in the <a href="doc_weights.html">Weights and Complex Survey Design</a> page. This calculated the weighted proportions of <code>Q2</code>.</p>
+<p>Given this, we can reproduce the first example in the <a href="doc_weights.html">Weights and Complex Survey Design</a> page. This calculated the weighted proportions of <code>&quot;Q2&quot;</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>prop <span class="ot">&lt;-</span> survey<span class="sc">::</span><span class="fu">svymean</span>(</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># x is the formula</span></span>
@@ -4815,12 +4835,31 @@ vertical-align: -.125em;
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">design =</span> svydes_obj,</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.rm =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<section id="other-survey-wrappers" class="level4" data-number="3.2.1">
+<h4 data-number="3.2.1" class="anchored" data-anchor-id="other-survey-wrappers"><span class="header-section-number">3.2.1</span> Other {survey} wrappers</h4>
+<p>The {cdrs} package also has other “wrappers” for {survey} package functions. These wrappers serve to specify the parameters of certain {survey} functions based on the design of the DRS.</p>
+<section id="way-cross-tabulation" class="level5" data-number="3.2.1.1">
+<h5 data-number="3.2.1.1" class="anchored" data-anchor-id="way-cross-tabulation"><span class="header-section-number">3.2.1.1</span> 2-way Cross Tabulation</h5>
+<p>Want to see a contingency table? Simply supply the (full) DRS data and the 2 variables you wish to analyze. Note, this approach uses <code>svytotal</code> which yields population proportion estimates for each crossed factor and their standard errors. You may run <code>stats::ftable()</code> on the results to create a ‘flat’ contigency table.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>xt <span class="ot">&lt;-</span> <span class="fu">cdrs_crosstab</span>(drs_data, <span class="fu">c</span>(<span class="st">&quot;Q2&quot;</span>, <span class="st">&quot;SEX_P&quot;</span>))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ftable</span>(xt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
 </section>
 </section>
+</section>
+</section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Why would you specify <code>&quot;none&quot;</code> <em>and</em> use <code>cdrs_read()</code>? Why not just load it with <code>read.csv()</code>? Just because we set <code>relevel_ = &quot;none&quot;</code> doesn’t mean <code>cdrs_read</code> is doing nothing. It will still make sure your data hasn’t been corrupted, and make sure all your ordered factors are correctly ordered.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
