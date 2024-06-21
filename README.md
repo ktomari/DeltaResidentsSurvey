@@ -4,5 +4,7 @@ Thank you for your interest in the the 2023 Delta Residents Survey. For more inf
 
 ## Source Code
 
-While this repository contains an earlier version of the source code (drs_functions.R) used to read the DRS data set, we encourage you to instead utilize the [package {cdrs}](https://github.com/ktomari/cdrs) which is currently in development. Core functions that help you read the DRS data and configure statistical analyses are available with this package.
+This repository largely contains scripts and files used to create the [DRS GitHub Page](https://ktomari.github.io/DeltaResidentsSurvey/), a home page for our research project (eg. the directory `/docs`). While we encourage researchers to utilize the [package {cdrs}](https://github.com/ktomari/cdrs) for analyzing the DRS data set, this repository also offers the directory `/code` which contains R scripts. These scripts exist here primarily for two reasons:
 
+1. As an archive for an earlier version of the source code used to read the DRS data set (primarily, `drs_functions.R`). This code is now largely integrated into the package {cdrs} and has been superseded. See [Core Functions Doc](https://ktomari.github.io/DeltaResidentsSurvey/doc_drs_functions.html).
+2. Scripts that utilize the {cdrs} package to produce analyses or visualizations used in other documents.
